@@ -35,13 +35,13 @@ function loadWebsiteStyle() {
           activeStyles.forEach((style) => {
             // Try to get style tag with id
             let styleTag = document.getElementById(
-              "ui-plus-style-tag-" + style.id
+              "eris-style-tag-" + style.id
             );
             // Tag doesn't exist or style is different
             if (!styleTag || styleTag.innerHTML !== style.css) {
               // Inject style
               let styleElement = document.createElement("style");
-              styleElement.setAttribute("id", "ui-plus-style-tag-" + style.id);
+              styleElement.setAttribute("id", "eris-style-tag-" + style.id);
               styleElement.innerHTML = style.css;
               document.head.appendChild(styleElement);
             }
@@ -52,7 +52,7 @@ function loadWebsiteStyle() {
           unactiveStyles.forEach((style) => {
             // Try to get style tag with id
             let styleTag = document.getElementById(
-              "ui-plus-style-tag-" + style.id
+              "eris-style-tag-" + style.id
             );
             // Tag exists
             if (styleTag) {

@@ -1,4 +1,4 @@
-# ui-plus
+# eris
 
 ## Project setup
 ```
