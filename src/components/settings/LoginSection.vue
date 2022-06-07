@@ -3,7 +3,9 @@
     <h2 class="settings-section-title">Profil</h2>
     <div class="settings-section-content" v-if="online.bearerToken">
       <div class="profil-header">
-        <div class="profil-picture">P</div>
+        <div class="profil-picture">
+          {{ online.user.username.substring(0, 1) }}
+        </div>
         <div class="profil-name">{{ online.user.username }}</div>
       </div>
       <Button content="Logout" @click="online.logout()" />

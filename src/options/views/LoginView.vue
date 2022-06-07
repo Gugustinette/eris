@@ -3,9 +3,9 @@
     v-if="online.showLogin"
     v-on:close="online.showLogin = false"
     v-on:confirm="login"
-    title="Create Style"
+    title="Login"
     :fields="['Username', 'Password']"
-    confirmText="Create"
+    confirmText="Login"
     cancelText="Cancel"
   />
 </template>
