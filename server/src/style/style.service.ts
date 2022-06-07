@@ -3,6 +3,7 @@ import { IStyle } from './interfaces/style.interface';
 import { CreateStyleDto } from './dto/create-style.dto';
 import { UpdateStyleDto } from './dto/update-style.dto';
 import { Model } from 'mongoose';
+import { IUser } from 'src/users/interfaces/user.interface';
 
 @Injectable()
 export class StyleService {
@@ -11,8 +12,12 @@ export class StyleService {
     private styleModel: Model<IStyle>,
   ) {}
 
-  create(createStyleDto: CreateStyleDto) {
-    const createdStyle = new this.styleModel(createStyleDto);
+  create(createStyleDto: CreateStyleDto, user: IUser) {
+    const newStyle = {
+      ...createStyleDto,
+      user: user._id,
+    };
+    const createdStyle = new this.styleModel(newStyle);
     return createdStyle.save();
   }
 

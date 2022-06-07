@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { StyleService } from './style.service';
 import { CreateStyleDto } from './dto/create-style.dto';
 import { UpdateStyleDto } from './dto/update-style.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { StyleGuard } from './style.guard';
 
 @Controller('style')
 export class StyleController {
@@ -19,8 +21,8 @@ export class StyleController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createStyleDto: CreateStyleDto) {
-    return this.styleService.create(createStyleDto);
+  create(@Request() req, @Body() createStyleDto: CreateStyleDto) {
+    return this.styleService.create(createStyleDto, req.user);
   }
 
   @Get()
@@ -33,13 +35,13 @@ export class StyleController {
     return this.styleService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, StyleGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStyleDto: UpdateStyleDto) {
     return this.styleService.update(id, updateStyleDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, StyleGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.styleService.remove(id);
