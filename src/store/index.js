@@ -18,7 +18,6 @@ export const useStore = defineStore("main-store", {
             this.styles = [];
           }
           resolve(this.styles);
-          console.log(this.styles);
         });
       });
     },
@@ -39,7 +38,7 @@ export const useStore = defineStore("main-store", {
     },
     addStyle(style) {
       // Generate id
-      style.id = Math.random().toString(36).substr(2, 9);
+      style._id = Math.random().toString(36).substr(2, 9);
       style.active = false;
       this.styles.push(style);
       this.saveToChromeStorage();
@@ -55,7 +54,6 @@ export const useStore = defineStore("main-store", {
       this.saveToChromeStorage();
     },
     deleteStyle(style) {
-      console.log(this.styles);
       this.styles = this.styles.filter((s) => s.id !== style.id);
       this.saveToChromeStorage();
     },

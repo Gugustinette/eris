@@ -26,8 +26,13 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload, {
         secret: jwtConstants.secret,
-        expiresIn: '60s',
+        expiresIn: '1h',
       }),
     };
+  }
+
+  async signup(user: any) {
+    const newUser = await this.usersService.createUser(user);
+    return this.login(newUser);
   }
 }

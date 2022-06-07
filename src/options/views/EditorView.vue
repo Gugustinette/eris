@@ -6,7 +6,7 @@
         <div class="editor-style-list-container">
           <StyleEditor
             v-for="style in store.styles"
-            :key="style.id"
+            :key="style._id"
             :style="style"
           />
         </div>

@@ -8,7 +8,7 @@
     </div>
     <div class="main-wrapper">
       <div class="add-style" @click="store.showAddStyle = true">+</div>
-      <Style v-for="style in store.styles" :key="style.id" :style="style" />
+      <Style v-for="style in store.styles" :key="style._id" :style="style" />
     </div>
   </div>
 </template>

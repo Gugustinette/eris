@@ -48,7 +48,7 @@ export default {
       this.$router.push({
         name: "style-editor",
         params: {
-          styleId: this.style.id,
+          styleId: this.style._id,
         },
       });
     },
@@ -56,13 +56,13 @@ export default {
   mounted() {
     // If styleId is defined in URL
     if (this.$route.params.styleId) {
-      this.actualStyle = this.style.id === this.$route.params.styleId;
+      this.actualStyle = this.style._id === this.$route.params.styleId;
     }
   },
   updated() {
     // If styleId is defined in URL
     if (this.$route.params.styleId) {
-      this.actualStyle = this.style.id === this.$route.params.styleId;
+      this.actualStyle = this.style._id === this.$route.params.styleId;
     }
   },
   data() {

@@ -39,7 +39,7 @@ export default {
     this.store.getStyles().then((styles) => {
       // Find the style we're editing
       this.editingStyle = styles.find((style) => {
-        return style.id === this.$route.params.styleId;
+        return style._id === this.$route.params.styleId;
       });
     });
   },

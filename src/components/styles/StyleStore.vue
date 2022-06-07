@@ -3,17 +3,14 @@
     <div class="style-thumbnail" @click.prevent="this.openStyle(style)">
       <div class="thumbnail-text">{{ this.thumbnail }}</div>
     </div>
-    <div class="actions" @click.prevent="this.store.toggleStyle(style)">
+    <div class="actions">
       <h3>{{ style.name }}</h3>
-      <Switch :checked="style.active" />
     </div>
   </div>
 </template>
 
 <script>
 import { useStore } from "../../store";
-
-import Switch from "@/components/form/Switch.vue";
 
 export default {
   setup() {
@@ -24,9 +21,6 @@ export default {
     };
   },
   name: "option-style",
-  components: {
-    Switch,
-  },
   props: {
     style: {
       type: Object,
@@ -36,7 +30,7 @@ export default {
   methods: {
     openStyle(style) {
       this.$router.push({
-        name: "style-editor",
+        name: "style-store",
         params: {
           styleId: style._id,
         },
@@ -66,7 +60,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  cursor: pointer;
 
   .style-thumbnail {
     width: 100%;
@@ -77,6 +70,7 @@ export default {
     justify-content: center;
     background: var(--color-secondary);
     border-radius: 7px;
+    cursor: pointer;
 
     .thumbnail-text {
       width: 80px;

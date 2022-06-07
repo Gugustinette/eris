@@ -11,4 +11,12 @@ export class AppController {
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
+
+  @Post('auth/signup')
+  async signup(@Request() req) {
+    return this.authService.signup({
+      username: req.body.username,
+      password: req.body.password,
+    });
+  }
 }
