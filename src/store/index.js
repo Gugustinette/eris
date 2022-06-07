@@ -54,7 +54,7 @@ export const useStore = defineStore("main-store", {
       this.saveToChromeStorage();
     },
     deleteStyle(style) {
-      this.styles = this.styles.filter((s) => s.id !== style.id);
+      this.styles = this.styles.filter((s) => s._id !== style._id);
       this.saveToChromeStorage();
     },
   },

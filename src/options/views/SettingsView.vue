@@ -3,23 +3,48 @@
     <div class="header">
       <h1 class="header-title">Settings</h1>
     </div>
-    <div class="main-wrapper"></div>
+    <div class="main-wrapper settings-main-wrapper">
+      <LoginSection />
+    </div>
   </div>
 </template>
 
 <script>
-import { useStore } from "../../store";
+// Components
+import LoginSection from "@/components/settings/LoginSection";
 
 export default {
-  setup() {
-    const store = useStore();
-
-    return {
-      store,
-    };
-  },
   name: "SettingsView",
+  components: {
+    LoginSection,
+  },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.settings-main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .settings-section {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    .settings-section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .settings-section-content {
+      display: flex;
+      flex-direction: column;
+      margin-left: 30px;
+    }
+  }
+}
+</style>
