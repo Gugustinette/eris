@@ -8,4 +8,8 @@ export const StyleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  nbDownloads: {
+    type: Number,
+    default: 0,
+  },
 });

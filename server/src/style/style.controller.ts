@@ -20,29 +20,49 @@ export class StyleController {
   constructor(private readonly styleService: StyleService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
+  @Post('create')
   create(@Request() req, @Body() createStyleDto: CreateStyleDto) {
     return this.styleService.create(createStyleDto, req.user);
   }
 
-  @Get()
+  @Get('get')
   findAll() {
-    return this.styleService.findAll();
+    return this.styleService.findAll().then((styles) => {
+      return styles.map((style) => {
+        // Remove 'css' property from each style object
+        style.css = undefined;
+        return style;
+      });
+    });
   }
 
-  @Get(':id')
+  @Get('get/:id')
   findOne(@Param('id') id: string) {
-    return this.styleService.findOne(id);
+    return this.styleService.findOne(id).then((style) => {
+      // Remove 'css' property from each style object
+      style.css = undefined;
+      return style;
+    });
+  }
+
+  @Get('download/:id')
+  downloadOne(@Request() req, @Param('id') id: string) {
+    return this.styleService.findOne(id).then((style) => {
+      // Increase the number of downloads
+      style.nbDownloads += 1;
+      // Update the style
+      return style.save();
+    });
   }
 
   @UseGuards(JwtAuthGuard, StyleGuard)
-  @Patch(':id')
+  @Patch('edit/:id')
   update(@Param('id') id: string, @Body() updateStyleDto: UpdateStyleDto) {
     return this.styleService.update(id, updateStyleDto);
   }
 
   @UseGuards(JwtAuthGuard, StyleGuard)
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.styleService.remove(id);
   }

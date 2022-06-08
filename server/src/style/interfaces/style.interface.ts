@@ -6,4 +6,5 @@ export interface IStyle extends Document {
   name: string;
   domain: string;
   css: string;
+  nbDownloads: number;
 }
