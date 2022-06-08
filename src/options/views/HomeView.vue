@@ -72,6 +72,7 @@ export default {
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   row-gap: 20px;
   column-gap: 20px;
   padding: 20px;

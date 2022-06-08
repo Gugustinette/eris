@@ -5,6 +5,7 @@ export const useStore = defineStore("main-store", {
   state: () => ({
     styles: [],
     showAddStyle: false,
+    editorContextMenu: "",
   }),
   actions: {
     // Get css from chrome extension storage
@@ -30,7 +31,7 @@ export const useStore = defineStore("main-store", {
     },
     toggleStyle(style) {
       this.styles.forEach((s) => {
-        if (s.id === style.id) {
+        if (s._id === style._id) {
           s.active = !s.active;
         }
       });
@@ -46,9 +47,18 @@ export const useStore = defineStore("main-store", {
     },
     editStyle(style) {
       this.styles.forEach((s) => {
-        if (s.id === style.id) {
+        if (s._id === style._id) {
           s.name = style.name;
           s.css = style.css;
+        }
+      });
+      this.saveToChromeStorage();
+    },
+    renameStyle(style) {
+      this.styles.forEach((s) => {
+        if (s._id === style._id) {
+          s.name = style.name;
+          s.domain = style.domain;
         }
       });
       this.saveToChromeStorage();

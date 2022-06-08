@@ -8,7 +8,9 @@
             v-for="style in store.styles"
             :key="style._id"
             :style="style"
+            :editorContextMenu="store.editorContextMenu"
           />
+          <div class="add-style" @click="store.showAddStyle = true">+</div>
         </div>
       </div>
     </div>
@@ -70,6 +72,29 @@ export default {
         display: flex;
         flex-direction: column;
         row-gap: 10px;
+
+        .add-style {
+          display: grid;
+          place-items: center;
+          width: 200px;
+          min-width: 167px;
+          padding-left: 10px;
+          padding-right: 10px;
+          height: 30px;
+          border-radius: 100px;
+
+          cursor: pointer;
+          background: var(--color-primary);
+          color: var(--color-secondary);
+          opacity: 0.6;
+          font-size: 20px;
+
+          transition: opacity 0.15s ease-in-out;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
       }
     }
   }
