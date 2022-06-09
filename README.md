@@ -9,7 +9,7 @@ The extension lets you create, manage and share custom themes.
 
 ## Project setup
 ```
-npm install
+npm run install-all
 ```
 
 ### Compiles and hot-reloads for development
@@ -27,5 +27,6 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Made by
+- [Augustin MERCIER "Gugustinette"]( https://twitter.com/gugustinette )
+- [Jason MOULIN "Zuukarimoto"]( https://sallt.fr )
