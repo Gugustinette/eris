@@ -6,7 +6,8 @@
     "serve": "vue-cli-service build --mode development --watch",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "install-all": "./scripts/install.sh"
+    "install-all": "./scripts/install.sh",
+    "uninstall-all": "./scripts/uninstall.sh"
   },
   "dependencies": {
     "core-js": "^3.8.3",
@@ -14,7 +15,8 @@
     "simple-code-editor": "^1.2.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "webextension-polyfill": "^0.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
