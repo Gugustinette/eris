@@ -23,6 +23,15 @@ export const useStore = defineStore("main-store", {
       });
     },
     saveToChromeStorage() {
+      // For each styles, prevent name and domain from containing "\n"
+      const styles = this.styles.map((style) => {
+        return {
+          ...style,
+          name: style.name.replace("/\n/", ""),
+          domain: style.domain.replace("/\n/g", ""),
+        };
+      });
+      this.styles = styles;
       chrome.storage.sync.set({ cssStyles: this.styles });
     },
     purgeChromeStorage() {
