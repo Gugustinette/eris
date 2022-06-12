@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1 class="header-title">Settings</h1>
+      <h1 class="header-title text-cant-be-selected">Settings</h1>
     </div>
     <div class="main-wrapper settings-main-wrapper">
       <LoginSection />

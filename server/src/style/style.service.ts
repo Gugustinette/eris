@@ -16,6 +16,7 @@ export class StyleService {
     const newStyle = {
       ...createStyleDto,
       user: user._id,
+      username: user.username,
     };
     const createdStyle = new this.styleModel(newStyle);
     return createdStyle.save();
@@ -32,7 +33,8 @@ export class StyleService {
   update(id: string, updateStyleDto: UpdateStyleDto) {
     const updatedStyle = {
       ...updateStyleDto,
-    };
+    } as any;
+    updatedStyle.updatedAt = new Date();
     return this.styleModel.updateOne({ _id: id }, updatedStyle).exec();
   }
 

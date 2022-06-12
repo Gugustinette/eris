@@ -47,18 +47,24 @@ export const useStore = defineStore("main-store", {
       this.saveToChromeStorage();
     },
     addStyle(style) {
-      // Generate id
-      style._id = Math.random().toString(36).substr(2, 9);
+      // Generate id if not provided
+      if (!style._id) {
+        style._id = Math.random().toString(36).substr(2, 9);
+      }
       style.active = false;
       this.styles.push(style);
       this.saveToChromeStorage();
-      console.log(this.styles);
     },
     editStyle(style) {
       this.styles.forEach((s) => {
         if (s._id === style._id) {
           s.name = style.name;
+          s.user = style.user;
+          s.username = style.username;
+          s.description = style.description;
+          s.domain = style.domain;
           s.css = style.css;
+          s.updatedAt = style.updatedAt;
         }
       });
       this.saveToChromeStorage();

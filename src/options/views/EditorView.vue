@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <div class="editor-header">
-      <h1 class="editor-header-title">Editor</h1>
+      <h1 class="editor-header-title text-cant-be-selected">Editor</h1>
       <div class="editor-style-list">
         <div class="editor-style-list-container">
           <StyleEditor

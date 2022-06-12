@@ -33,7 +33,7 @@ export const useOnline = defineStore("online-store", {
     // Get css from chrome extension storage
     getStyles() {
       return new Promise((resolve) => {
-        fetch(API_URL + "/style")
+        fetch(API_URL + "/style/get")
           .then((res) => res.json())
           .then((data) => {
             this.styles = data;
@@ -78,6 +78,20 @@ export const useOnline = defineStore("online-store", {
         chrome.storage.sync.remove("bearerToken");
         chrome.storage.sync.remove("user");
         resolve();
+      });
+    },
+    downloadStyle(style) {
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/download/" + style._id, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve(data);
+          });
       });
     },
     addStyle(style) {

@@ -14,14 +14,20 @@ import { CreateStyleDto } from './dto/create-style.dto';
 import { UpdateStyleDto } from './dto/update-style.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { StyleGuard } from './style.guard';
+import { HtmlUtil } from 'src/util/html.util';
 
 @Controller('style')
 export class StyleController {
-  constructor(private readonly styleService: StyleService) {}
+  constructor(
+    private readonly styleService: StyleService,
+    private readonly htmlUtil: HtmlUtil,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
   create(@Request() req, @Body() createStyleDto: CreateStyleDto) {
+    // Remove HTML tags from the css
+    createStyleDto.css = this.htmlUtil.purgeHtml(createStyleDto.css);
     return this.styleService.create(createStyleDto, req.user);
   }
 
@@ -58,6 +64,8 @@ export class StyleController {
   @UseGuards(JwtAuthGuard, StyleGuard)
   @Patch('edit/:id')
   update(@Param('id') id: string, @Body() updateStyleDto: UpdateStyleDto) {
+    // Remove HTML tags from the css
+    updateStyleDto.css = this.htmlUtil.purgeHtml(updateStyleDto.css);
     return this.styleService.update(id, updateStyleDto);
   }
 

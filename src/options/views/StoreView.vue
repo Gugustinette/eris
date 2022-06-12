@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1 class="header-title">Store</h1>
+      <h1 class="header-title text-cant-be-selected">Store</h1>
     </div>
     <div class="main-wrapper">
       <StyleStore
@@ -35,6 +35,7 @@ export default {
     StyleStore,
   },
   mounted() {
+    this.store.getStyles();
     this.online.getStyles();
   },
 };

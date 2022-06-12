@@ -1,6 +1,9 @@
 <template>
   <div class="style">
-    <div class="style-thumbnail" @click.prevent="this.openStyle(style)">
+    <div
+      class="style-thumbnail text-cant-be-selected"
+      @click.prevent="this.openStyle(style)"
+    >
       <div class="thumbnail-text">{{ this.thumbnail }}</div>
     </div>
     <div class="actions" @click.prevent="this.store.toggleStyle(style)">

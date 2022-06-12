@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "install-all": "./scripts/install.sh",
-    "uninstall-all": "./scripts/uninstall.sh"
+    "uninstall-all": "./scripts/uninstall.sh",
+    "server:dev": "cd server && npm run start:dev",
+    "server:prod": "cd server && npm run build"
   },
   "dependencies": {
     "core-js": "^3.8.3",
