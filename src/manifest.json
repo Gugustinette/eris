@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "homepage_url": "http://localhost:8080/",
-  "description": "A Vue Browser Extension",
+  "homepage_url": "https://twitter.com/gugustinette",
+  "description": "Create and share new UI for websites",
   "default_locale": "en",
   "permissions": [
     "activeTab",
