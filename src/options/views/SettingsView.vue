@@ -25,7 +25,7 @@ export default {
 .settings-main-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-content: center;
 
   .settings-section {
     max-width: 1000px;
