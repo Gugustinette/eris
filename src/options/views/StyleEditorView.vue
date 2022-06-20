@@ -1,9 +1,12 @@
 <template>
-  <Editor
-    :css="editingStyle.css || ''"
-    @save-css="this.saveCSS"
-    @needs-to-be-saved="stateChanged"
-  />
+  <div class="style-editor-view">
+    <EditorActionBar />
+    <Editor
+      :css="editingStyle.css || ''"
+      @save-css="this.saveCSS"
+      @needs-to-be-saved="stateChanged"
+    />
+  </div>
 </template>
 
 <script>
@@ -11,6 +14,7 @@ import { useStore } from "../../store";
 
 // Components
 import Editor from "@/components/editor/Editor.vue";
+import EditorActionBar from "@/components/editor/ActionBar.vue";
 
 export default {
   setup() {
@@ -23,6 +27,7 @@ export default {
   name: "StyleEditorView",
   components: {
     Editor,
+    EditorActionBar,
   },
   methods: {
     saveCSS(css) {
@@ -52,4 +57,11 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.style-editor-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+}
+</style>
