@@ -30,6 +30,8 @@ export default {
   --color-background: #040404;
   --color-action: #ba674f;
 
+  --black-off: rgba(0, 0, 0, 0.3);
+
   --navbar-background: conic-gradient(
     from 156.31deg at 50% 49.38%,
     #e5c4b8 0deg,
