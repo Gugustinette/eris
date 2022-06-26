@@ -29,11 +29,12 @@ input {
   width: auto;
   height: 40px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   padding-left: 20px;
   padding-right: 20px;
   font-size: 16px;
-  background: var(--color-primary);
+  color: var(--font-on-secondary);
+  background: var(--color-secondary);
   outline: none;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -45,10 +46,11 @@ input {
 }
 
 .colorOnHover:hover {
-  background: var(--color-primary-hover);
+  background: var(--color-action);
 }
 
 .noBackground {
+  color: var(--font);
   background: transparent;
 }
 </style>

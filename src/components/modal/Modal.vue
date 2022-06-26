@@ -1,7 +1,9 @@
 <template>
   <div class="modal-panel" @click.self="closeModalPanel">
     <form class="modal" @submit.prevent="handleConfirm">
-      <div class="close" v-on:click="closeModalPanel">x</div>
+      <div style="display: none" class="close" v-on:click="closeModalPanel">
+        x
+      </div>
       <h1>{{ title }}</h1>
       <div class="fields" v-if="fields">
         <div
@@ -17,7 +19,7 @@
       <div class="modal-footer">
         <Button
           v-bind:content="confirmText"
-          :colorOnHover="true"
+          :colorOnHover="false"
           type="submit"
         />
         <Button
@@ -125,13 +127,14 @@ export default defineComponent({
     position: relative;
     padding-top: 20px;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 40px;
     min-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background: var(--color-surface);
+    border-radius: var(--border-radius-medium);
 
     opacity: 1 !important;
     -webkit-transform: scale(1) translateZ(0px) !important;
@@ -172,11 +175,13 @@ export default defineComponent({
       margin-top: 6px;
       display: grid;
       place-content: center;
-      font-size: 1.2rem;
+      font-size: var(--font-size-large);
       cursor: pointer;
     }
 
     h1 {
+      font-size: var(--font-size-title);
+      color: var(--color-secondary);
       margin-bottom: 20px;
     }
 
