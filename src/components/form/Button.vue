@@ -33,7 +33,7 @@ input {
   padding-left: 20px;
   padding-right: 20px;
   font-size: 16px;
-  color: var(--font-on-secondary);
+  color: var(--color-primary);
   background: var(--color-secondary);
   outline: none;
   transition: all 0.3s ease;

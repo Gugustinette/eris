@@ -1,6 +1,10 @@
 <template>
   <nav>
-    <img src="../../assets/logo.png" alt="Eris Logo" />
+    <img
+      src="../../assets/logo.png"
+      alt="Eris Logo"
+      @click="this.openOptions"
+    />
     <RoutePopup to="/" content="My Styles" />
     <RoutePopup to="/settings" content="Preferences" />
   </nav>
@@ -13,6 +17,11 @@ export default {
   name: "popup-navbar",
   components: {
     RoutePopup,
+  },
+  methods: {
+    openOptions() {
+      chrome.runtime.openOptionsPage();
+    },
   },
 };
 </script>
@@ -34,6 +43,7 @@ nav {
     margin-left: 10px;
     height: 30px;
     width: 30px;
+    cursor: pointer;
   }
 }
 </style>
