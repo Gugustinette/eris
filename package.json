@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service build --mode development --watch",
-    "build": "vue-cli-service build",
+    "build": "./scripts/build.sh",
     "lint": "vue-cli-service lint",
     "install-all": "./scripts/install.sh",
     "uninstall-all": "./scripts/uninstall.sh",
