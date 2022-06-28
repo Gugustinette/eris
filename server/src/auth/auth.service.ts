@@ -33,6 +33,7 @@ export class AuthService {
           expiresIn: '1h',
         },
       ),
+      _id: userDb._id,
     };
   }
 

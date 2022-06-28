@@ -5,7 +5,10 @@
       :owned="owned"
       :needsToBeSaved="needsToBeSaved"
       :needsToBePublished="needsToBePublished"
+      :allreadyPublished="allreadyPublished"
       @save-css="getCssForSave = true"
+      @publish-css="this.publishCss"
+      @update-css="this.updateCss"
     />
     <Editor
       :css="editingStyle.css || ''"
@@ -19,6 +22,7 @@
 
 <script>
 import { useStore } from "../../store";
+import { useOnline } from "../../store/online";
 
 // Components
 import Editor from "@/components/editor/Editor.vue";
@@ -27,9 +31,11 @@ import EditorActionBar from "@/components/editor/ActionBar.vue";
 export default {
   setup() {
     const store = useStore();
+    const online = useOnline();
 
     return {
       store,
+      online,
     };
   },
   name: "StyleEditorView",
@@ -40,6 +46,10 @@ export default {
   methods: {
     saveCSS(css) {
       this.editingStyle.css = css;
+      this.editingStyle.updatedLocal = true;
+      if (this.owned) {
+        this.needsToBePublished = true;
+      }
       this.store.editStyle(this.editingStyle);
       this.needsToBeSaved = false;
     },
@@ -50,13 +60,78 @@ export default {
       this.getCssForSave = false;
       this.saveCSS(css);
     },
+    publishCss() {
+      // Publish the style
+      this.online.addStyle(this.editingStyle).then((remoteStyle) => {
+        // No local changes to publish
+        this.editingStyle.updatedLocal = undefined;
+        // Dates for versioning
+        this.editingStyle.updatedAt = remoteStyle.updatedAt;
+        this.editingStyle.createdAt = remoteStyle.createdAt;
+        // Save as local style
+        this.store.editStyle(this.editingStyle);
+        // States
+        this.needsToBePublished = false;
+        this.allreadyPublished = true;
+      });
+    },
+    updateCss() {
+      // Edit the style
+      this.online.editStyle(this.editingStyle).then((remoteStyle) => {
+        // No local changes to publish
+        this.editingStyle.updatedLocal = undefined;
+        // Dates for versioning
+        this.editingStyle.updatedAt = remoteStyle.updatedAt;
+        this.editingStyle.createdAt = remoteStyle.createdAt;
+        // Save as local style
+        this.store.editStyle(this.editingStyle);
+        // States
+        this.needsToBePublished = false;
+        this.allreadyPublished = true;
+      });
+    },
   },
   mounted() {
-    // Get the style from the store
-    this.store.getStyles().then((styles) => {
-      // Find the style we're editing
-      this.editingStyle = styles.find((style) => {
-        return style._id === this.$route.params.styleId;
+    this.online.loadUser().then(() => {
+      // Get the style from the store
+      this.store.getStyles().then((styles) => {
+        // Find the style we're editing
+        this.editingStyle = styles.find((style) => {
+          return style._id === this.$route.params.styleId;
+        });
+
+        // Owned ?
+        if (this.editingStyle.user === undefined) {
+          // No user defined => Local Style Owned
+          this.owned = true;
+        } else {
+          // User defined => Needs connection to know
+          if (this.online.isConnected()) {
+            // Connected
+            if (this.editingStyle.user === this.online.user._id) {
+              // Owned
+              this.owned = true;
+            } else {
+              // Not Owned
+              this.owned = false;
+            }
+          } else {
+            // Not connected
+            this.owned = false;
+          }
+        }
+
+        // Needs to be published ?
+        if (this.editingStyle.updatedLocal) {
+          this.needsToBePublished = true;
+        } else {
+          this.needsToBePublished = false;
+        }
+
+        // Allready published ?
+        if (this.editingStyle.updatedAt) {
+          this.allreadyPublished = true;
+        }
       });
     });
   },
@@ -65,6 +140,7 @@ export default {
       editingStyle: {},
       needsToBeSaved: false,
       needsToBePublished: false,
+      allreadyPublished: false,
       isConnected: false,
       owned: false,
       getCssForSave: false,

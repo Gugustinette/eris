@@ -66,6 +66,9 @@ export const useStore = defineStore("main-store", {
           s.domain = style.domain;
           s.css = style.css;
           s.updatedAt = style.updatedAt;
+          if (style.updatedLocal) {
+            s.updatedLocal = style.updatedLocal;
+          }
         }
       });
       this.saveToChromeStorage();

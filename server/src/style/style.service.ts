@@ -23,7 +23,7 @@ export class StyleService {
   }
 
   findAll() {
-    return this.styleModel.find().exec();
+    return this.styleModel.find().limit(20).exec();
   }
 
   findOne(id: string) {
@@ -35,7 +35,11 @@ export class StyleService {
       ...updateStyleDto,
     } as any;
     updatedStyle.updatedAt = new Date();
-    return this.styleModel.updateOne({ _id: id }, updatedStyle).exec();
+    return this.styleModel
+      .findOneAndUpdate({ _id: id }, updatedStyle, {
+        new: true,
+      })
+      .exec();
   }
 
   remove(id: string) {

@@ -14,21 +14,25 @@ export const useOnline = defineStore("online-store", {
   actions: {
     // Load user from chrome extension storage
     loadUser() {
-      // Get bearerToken from Chrome extension storage
-      chrome.storage.sync.get("bearerToken", (resToken) => {
-        if (resToken.bearerToken) {
-          // Get user
-          chrome.storage.sync.get("user", (resUser) => {
-            if (resUser.user) {
-              this.bearerToken = resToken.bearerToken;
-              this.user = resUser.user;
-            } else {
-              this.user = undefined;
-            }
-          });
-        } else {
-          this.bearerToken = undefined;
-        }
+      return new Promise((resolve) => {
+        // Get bearerToken from Chrome extension storage
+        chrome.storage.sync.get("bearerToken", (resToken) => {
+          if (resToken.bearerToken) {
+            // Get user
+            chrome.storage.sync.get("user", (resUser) => {
+              if (resUser.user) {
+                this.bearerToken = resToken.bearerToken;
+                this.user = resUser.user;
+              } else {
+                this.user = undefined;
+              }
+              resolve();
+            });
+          } else {
+            this.bearerToken = undefined;
+            resolve();
+          }
+        });
       });
     },
     // Get css from chrome extension storage
@@ -126,14 +130,65 @@ export const useOnline = defineStore("online-store", {
           });
       });
     },
+    isConnected() {
+      return this.bearerToken !== undefined;
+    },
+    // Add Style
     addStyle(style) {
-      console.log(style);
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/create", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: style.name,
+            domain: style.domain,
+            description: "",
+            css: style.css,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve(data);
+          });
+      });
     },
     editStyle(style) {
-      console.log(style);
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/edit/" + style._id, {
+          method: "PATCH",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: style.name,
+            domain: style.domain,
+            css: style.css,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve(data);
+          });
+      });
     },
     deleteStyle(style) {
-      console.log(style);
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/delete/" + style._id, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve(data);
+          });
+      });
     },
   },
 });
