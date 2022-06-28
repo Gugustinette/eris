@@ -86,6 +86,7 @@ export const useOnline = defineStore("online-store", {
           .then((data) => {
             const bearerToken = data.access_token;
             const user = {
+              _id: data._id,
               username: username,
             };
             this.bearerToken = bearerToken;

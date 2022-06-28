@@ -28,6 +28,10 @@ export default {
       type: String,
       required: false,
     },
+    getCssForSave: {
+      type: Boolean,
+      required: false,
+    },
   },
   methods: {
     saveCSS() {
@@ -55,6 +59,14 @@ export default {
       handler(css) {
         this.editedCSS = css;
         this.lastSavedCSS = css;
+      },
+    },
+    getCssForSave: {
+      immediate: true,
+      handler(getCssForSave) {
+        if (getCssForSave) {
+          this.$emit("get-css-for-save", this.editedCSS);
+        }
       },
     },
   },

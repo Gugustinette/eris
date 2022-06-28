@@ -1,10 +1,18 @@
 <template>
   <div class="style-editor-view">
-    <EditorActionBar />
+    <EditorActionBar
+      :isConnected="isConnected"
+      :owned="owned"
+      :needsToBeSaved="needsToBeSaved"
+      :needsToBePublished="needsToBePublished"
+      @save-css="getCssForSave = true"
+    />
     <Editor
       :css="editingStyle.css || ''"
+      :getCssForSave="getCssForSave"
       @save-css="this.saveCSS"
       @needs-to-be-saved="stateChanged"
+      @get-css-for-save="this.saveCssManually"
     />
   </div>
 </template>
@@ -38,6 +46,10 @@ export default {
     stateChanged() {
       this.needsToBeSaved = true;
     },
+    saveCssManually(css) {
+      this.getCssForSave = false;
+      this.saveCSS(css);
+    },
   },
   mounted() {
     // Get the style from the store
@@ -52,6 +64,10 @@ export default {
     return {
       editingStyle: {},
       needsToBeSaved: false,
+      needsToBePublished: false,
+      isConnected: false,
+      owned: false,
+      getCssForSave: false,
     };
   },
 };

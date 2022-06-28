@@ -53,7 +53,14 @@
       </div>
     </div>
     <div class="right">
-      <div class="main-action" @click="save()">
+      <div
+        :class="{
+          visible: true,
+          'main-action': true,
+          'main-action-on': needsToBeSaved,
+        }"
+        @click="save()"
+      >
         <svg
           width="14"
           height="14"
@@ -68,17 +75,22 @@
         </svg>
         Save
       </div>
-      <div class="main-action main-action-on" @click="save()">
+      <div
+        :class="{
+          visible: owned,
+          'main-action': true,
+          'main-action-on': needsToBePublished,
+        }"
+        @click="publish()"
+      >
         <svg
           width="15"
           height="14"
           viewBox="0 0 15 14"
-          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M11.1295 3.71875C11.0134 3.71875 10.8972 3.71875 10.7811 3.71875C10.1423 2.52557 8.86479 1.75 7.47113 1.75C6.13553 1.75 4.91608 2.52557 4.21924 3.71875C4.1031 3.71875 3.98697 3.71875 3.87083 3.71875C2.36102 3.71875 1.0835 5.03125 1.0835 6.64205C1.0835 8.25284 2.36102 9.50568 3.9289 9.50568H5.4387C5.78712 9.50568 6.01939 9.26705 6.01939 8.90909C6.01939 8.55114 5.78712 8.3125 5.4387 8.3125H3.9289C2.99979 8.3125 2.24488 7.53693 2.24488 6.64205C2.24488 5.74716 2.99979 4.91193 3.9289 4.91193C4.1031 4.91193 4.27731 4.91193 4.39345 4.97159C4.6838 5.09091 4.97414 4.91193 5.09028 4.61364C5.49677 3.59943 6.42588 2.94318 7.5292 2.94318C8.63252 2.94318 9.56163 3.59943 9.96811 4.61364C10.0843 4.91193 10.3746 5.03125 10.6649 4.97159C10.8392 4.91193 10.9553 4.91193 11.1295 4.91193C12.0586 4.91193 12.8135 5.6875 12.8135 6.64205C12.8135 7.59659 12.0586 8.3125 11.1295 8.3125H8.10989V6.52273L8.69059 7.11932C8.80672 7.23864 8.98093 7.2983 9.09707 7.2983C9.21321 7.2983 9.38742 7.23864 9.50356 7.11932C9.73583 6.88068 9.73583 6.52273 9.50356 6.28409L7.87761 4.61364C7.81954 4.55398 7.76148 4.49432 7.70341 4.49432C7.58727 4.43466 7.41306 4.43466 7.23885 4.49432C7.18078 4.55398 7.12271 4.55398 7.06464 4.61364L5.49677 6.28409C5.26449 6.52273 5.26449 6.94034 5.49677 7.11932C5.72905 7.2983 6.07746 7.35795 6.30974 7.11932L6.89043 6.52273V11.6534C6.89043 12.0114 7.12271 12.25 7.47113 12.25C7.81954 12.25 8.05182 12.0114 8.05182 11.6534V9.50568H11.0714C12.6393 9.50568 13.9168 8.19318 13.9168 6.58239C13.9168 4.97159 12.6974 3.71875 11.1295 3.71875Z"
-            fill="#2A2B59"
           />
         </svg>
         Publish
@@ -95,10 +107,25 @@ export default {
       type: Boolean,
       required: false,
     },
+    isConnected: {
+      type: Boolean,
+      required: false,
+    },
+    needsToBeSaved: {
+      type: Boolean,
+      required: false,
+    },
+    needsToBePublished: {
+      type: Boolean,
+      required: false,
+    },
   },
   methods: {
     save() {
       this.$emit("save-css");
+    },
+    publish() {
+      this.$emit("publish-css");
     },
   },
 };
@@ -176,8 +203,9 @@ export default {
     background: var(--black-off);
     color: var(--color-primary-hover);
     fill: var(--color-primary-hover);
-    display: flex;
+    display: none;
     justify-content: space-between;
+    column-gap: 5px;
     align-items: center;
     padding: 10px 20px;
     min-width: 50px;
@@ -187,6 +215,10 @@ export default {
   .main-action-on {
     background: var(--color-secondary);
     color: var(--color-primary);
+  }
+
+  .visible {
+    display: flex;
   }
 }
 </style>
