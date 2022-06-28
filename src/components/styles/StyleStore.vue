@@ -2,7 +2,7 @@
   <div class="style">
     <div
       class="style-thumbnail text-cant-be-selected"
-      @click.prevent="this.downloadStyle(style, false)"
+      @click.prevent="this.openStyle(style, false)"
     >
       <div class="thumbnail-text">{{ this.thumbnail }}</div>
       <StyleState :state="this.state" @state-click="this.handleStateClick" />
@@ -43,6 +43,9 @@ export default {
     },
   },
   methods: {
+    openStyle() {
+      this.store.actualStoreStyle = this.style;
+    },
     downloadStyle(style, force) {
       // Check if style is allready downloaded
       if (!this.store.styles.find((s) => s._id === style._id)) {
@@ -141,10 +144,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: start;
-    row-gap: 10px;
     justify-content: space-between;
     width: 100%;
-    column-gap: 5px;
 
     .username {
       color: var(--color-gray-secondary);
@@ -156,6 +157,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
+      margin-top: 15px;
     }
   }
 }

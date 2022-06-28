@@ -11,6 +11,7 @@
       />
     </div>
   </div>
+  <StyleModal v-if="store.actualStoreStyle !== undefined" />
 </template>
 
 <script>
@@ -19,6 +20,7 @@ import { useOnline } from "../../store/online";
 
 // Components
 import StyleStore from "@/components/styles/StyleStore";
+import StyleModal from "@/components/styles/StyleModal";
 
 export default {
   setup() {
@@ -33,6 +35,7 @@ export default {
   name: "StoreView",
   components: {
     StyleStore,
+    StyleModal,
   },
   mounted() {
     this.store.getStyles();

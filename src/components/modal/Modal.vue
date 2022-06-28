@@ -198,6 +198,7 @@ export default defineComponent({
 }
 
 .out {
+  background: none;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
 
