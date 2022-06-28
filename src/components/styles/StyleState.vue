@@ -4,9 +4,13 @@
       'style-state': true,
       'background-black': state === 'late-to-date' || state === 'downloading',
     }"
-    @click="this.handleClick"
+    @click.self="this.openStyle"
   >
-    <div class="up-to-date" v-if="state === 'up-to-date'">
+    <div
+      class="up-to-date"
+      v-if="state === 'up-to-date'"
+      @click.prevent="this.openStyle"
+    >
       <svg
         width="20"
         height="22"
@@ -18,7 +22,11 @@
         />
       </svg>
     </div>
-    <div v-else-if="state === 'late-to-date'" class="action late-to-date">
+    <div
+      v-else-if="state === 'late-to-date'"
+      class="action late-to-date"
+      @click.prevent="this.handleClick"
+    >
       <svg
         width="13"
         height="13"
@@ -59,6 +67,9 @@ export default {
     handleClick() {
       // Emit state
       this.$emit("state-click", this.state);
+    },
+    openStyle() {
+      this.$emit("state-click", "open");
     },
   },
 };

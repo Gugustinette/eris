@@ -83,5 +83,25 @@ export const useStore = defineStore("main-store", {
       this.styles = this.styles.filter((s) => s._id !== style._id);
       this.saveToChromeStorage();
     },
+    isStyleInstalled(style) {
+      return this.styles.some((s) => s._id === style._id);
+    },
+    isStyleUpToDate(style) {
+      // Find style
+      const foundStyle = this.styles.find((s) => s._id === style._id);
+
+      // If style is not found, return false
+      if (!foundStyle) {
+        return false;
+      }
+
+      // If style is up to date, return true
+      if (foundStyle.updatedAt === style.updatedAt) {
+        return true;
+      }
+
+      // If style is not up to date, return false
+      return false;
+    },
   },
 });

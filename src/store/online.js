@@ -1,5 +1,6 @@
 // Pinia Store
 import { defineStore } from "pinia";
+import { useStore } from "./index";
 
 const API_URL = "http://localhost:9050";
 
@@ -37,9 +38,36 @@ export const useOnline = defineStore("online-store", {
           .then((res) => res.json())
           .then((data) => {
             this.styles = data;
+            this.updateStyleState();
             resolve(this.styles);
           });
       });
+    },
+    // Update style states
+    updateStyleState() {
+      const baseStore = useStore();
+      this.styles.forEach((style) => {
+        if (
+          baseStore.isStyleInstalled(style) &&
+          baseStore.isStyleUpToDate(style)
+        ) {
+          style.state = "up-to-date";
+        } else if (
+          baseStore.isStyleInstalled(style) &&
+          !baseStore.isStyleUpToDate(style)
+        ) {
+          style.state = "late-to-date";
+        } else {
+          style.state = "none";
+        }
+      });
+    },
+    // Change state of specfiic style reactively
+    changeStyleState(style, state) {
+      // Find style in styles array
+      const index = this.styles.findIndex((s) => s._id === style._id);
+      // Update state
+      this.styles[index].state = state;
     },
     // Login
     login(username, password) {
@@ -81,6 +109,8 @@ export const useOnline = defineStore("online-store", {
       });
     },
     downloadStyle(style) {
+      // Change style state in styles
+      this.changeStyleState(style, "downloading");
       return new Promise((resolve) => {
         fetch(API_URL + "/style/download/" + style._id, {
           method: "GET",
@@ -90,6 +120,7 @@ export const useOnline = defineStore("online-store", {
         })
           .then((res) => res.json())
           .then((data) => {
+            this.changeStyleState(style, "up-to-date");
             resolve(data);
           });
       });

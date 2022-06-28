@@ -1,11 +1,11 @@
 <template>
   <div class="style">
-    <div
-      class="style-thumbnail text-cant-be-selected"
-      @click.prevent="this.openStyle(style, false)"
-    >
+    <div class="style-thumbnail text-cant-be-selected">
       <div class="thumbnail-text">{{ this.thumbnail }}</div>
-      <StyleState :state="this.state" @state-click="this.handleStateClick" />
+      <StyleState
+        :state="this.style.state"
+        @state-click="this.handleStateClick"
+      />
     </div>
     <div class="details">
       <h3>{{ style.name }}</h3>
@@ -48,19 +48,17 @@ export default {
     },
     downloadStyle(style, force) {
       // Check if style is allready downloaded
-      if (!this.store.styles.find((s) => s._id === style._id)) {
-        this.state = "downloading";
+      if (!this.store.isStyleInstalled(style)) {
+        // Style not found => Download
         this.online.downloadStyle(style).then((style) => {
           this.store.addStyle(style);
-          this.state = "up-to-date";
         });
       } else {
         // If force
         if (force) {
-          this.state = "downloading";
+          // Force download
           this.online.downloadStyle(style).then((style) => {
             this.store.editStyle(style);
-            this.state = "up-to-date";
           });
         }
       }
@@ -68,6 +66,9 @@ export default {
     handleStateClick(state) {
       if (state === "none") {
         return;
+      }
+      if (state === "open") {
+        this.openStyle();
       }
       if (state === "downloading") {
         return;
@@ -87,8 +88,8 @@ export default {
     // Set to upper case and add a dot
     this.thumbnail = thumbnail.toUpperCase() + ".";
     // If style is downloaded, check if it is up to date
-    if (this.store.styles.find((s) => s._id === this.style._id)) {
-      if (this.store.styles.find((s) => s.updatedAt === this.style.updatedAt)) {
+    if (this.store.isStyleInstalled(this.style)) {
+      if (this.store.isStyleUpToDate(this.style)) {
         this.state = "up-to-date";
       } else {
         this.state = "late-to-date";
@@ -98,7 +99,6 @@ export default {
   data() {
     return {
       thumbnail: "YO.",
-      state: "none",
     };
   },
 };
