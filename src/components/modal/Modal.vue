@@ -52,7 +52,7 @@ export default defineComponent({
     },
     fields: {
       type: Array,
-      default: () => ["field1", "field2"],
+      default: undefined,
     },
     confirmText: {
       type: String,
@@ -95,7 +95,7 @@ export default defineComponent({
   },
   mounted() {
     // Turn on focus on the first field
-    if (this.fields.length > 0) {
+    if (this.fields && this.fields.length > 0) {
       const firstField = document.querySelector(`#data-field-${this.fields[0]}`)
         ?.children[1];
       if (firstField) {
@@ -106,7 +106,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .modal-panel {
   position: absolute;
   top: 0;

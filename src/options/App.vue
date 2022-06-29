@@ -4,17 +4,20 @@
     <router-view></router-view>
   </div>
   <AddStyle />
+  <ImportStyle />
 </template>
 
 <script>
 import Navbar from "@/components/navbar/Navbar.vue";
 import AddStyle from "@/options/views/AddStyleView.vue";
+import ImportStyle from "./views/ImportStyleView.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
     AddStyle,
+    ImportStyle,
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="home">
     <div class="header">
       <h1 class="header-title text-cant-be-selected">My styles</h1>
-      <div class="actions">
+      <div class="actions" style="display: none">
         <button @click="store.purgeChromeStorage()">Purge</button>
       </div>
     </div>

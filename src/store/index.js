@@ -5,6 +5,7 @@ export const useStore = defineStore("main-store", {
   state: () => ({
     styles: [],
     showAddStyle: false,
+    showImportStyle: false,
     editorContextMenu: "",
     actualStoreStyle: undefined,
   }),
