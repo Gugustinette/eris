@@ -1,7 +1,7 @@
 <template>
   <div class="code-editor-action-bar">
     <div class="left">
-      <div class="action">
+      <div class="action" @click="this.$emit('export-css')">
         <svg
           width="24"
           height="25"
@@ -24,9 +24,9 @@
             d="M14.7808 15.0634C15.1259 15.4947 15.0559 16.1239 14.6247 16.469L12.6247 18.069C12.1934 18.414 11.5641 18.344 11.2191 17.9128C10.8741 17.4815 10.944 16.8522 11.3753 16.5072L13.3753 14.9072C13.8065 14.5622 14.4358 14.6321 14.7808 15.0634Z"
           />
         </svg>
-        <div class="action-title">Export File</div>
+        <div class="action-title">Export CSS File</div>
       </div>
-      <div class="action">
+      <div class="action" @click="this.$emit('export-package')">
         <svg
           width="24"
           height="25"

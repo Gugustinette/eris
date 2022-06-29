@@ -9,6 +9,8 @@
       @save-css="getCssForSave = true"
       @publish-css="this.publishCss"
       @update-css="this.updateCss"
+      @export-css="this.exportCss"
+      @export-package="this.exportPackage"
     />
     <Editor
       :css="editingStyle.css || ''"
@@ -89,6 +91,36 @@ export default {
         this.needsToBePublished = false;
         this.allreadyPublished = true;
       });
+    },
+    // Export the style as CSS file
+    exportCss() {
+      // Make the user download with navigator API
+      const blob = new Blob([this.editingStyle.css], {
+        type: "text/plain;charset=utf-8",
+      });
+      this.saveAs(blob, this.editingStyle.name, "css");
+    },
+    // Export as full package
+    exportPackage() {
+      // Make the user download with navigator API
+      const blob = new Blob([JSON.stringify(this.editingStyle)], {
+        type: "text/plain;charset=utf-8",
+      });
+      this.saveAs(blob, this.editingStyle.name, "eris");
+    },
+    // Save as file
+    saveAs(blob, filename, extension) {
+      const file = `${filename}.${extension}`;
+      if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, file);
+      } else {
+        const elemDownload = window.document.createElement("a");
+        elemDownload.href = window.URL.createObjectURL(blob);
+        elemDownload.download = file;
+        document.body.appendChild(elemDownload);
+        elemDownload.click();
+        document.body.removeChild(elemDownload);
+      }
     },
   },
   mounted() {
