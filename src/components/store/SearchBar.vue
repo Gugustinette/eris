@@ -1,0 +1,79 @@
+<template>
+  <div class="search-bar">
+    <input
+      type="text"
+      name="Search Bar"
+      autocomplete="off"
+      placeholder="ex. Facebook, Amazon, ..."
+      @input="this.onInput"
+      class="text-can-be-selected"
+    />
+    <svg
+      class="search-icon"
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M11.343 8.97619L10.2135 7.84524C9.97567 7.60714 9.61898 7.60714 9.38119 7.84524C9.14339 8.08333 9.14339 8.44048 9.38119 8.67857L10.5107 9.80952C10.689 9.9881 10.689 10.2857 10.5107 10.4643C10.3324 10.6429 10.0351 10.6429 9.85677 10.4643L8.07333 8.67857C8.19223 8.55952 8.31112 8.5 8.43002 8.38095C9.32174 7.4881 9.85677 6.2381 9.85677 4.9881C9.85677 3.67857 9.38118 2.4881 8.43002 1.59524C6.52768 -0.309523 3.49584 -0.309523 1.5935 1.59524C-0.308836 3.5 -0.308836 6.53571 1.5935 8.44048C2.48522 9.33333 3.73363 9.86905 4.98204 9.86905C5.69541 9.86905 6.40879 9.69048 7.00327 9.39286L8.96505 11.3571C9.26229 11.6548 9.73787 11.8333 10.154 11.8333C10.5701 11.8333 10.9863 11.6548 11.343 11.3571C11.9969 10.6429 11.9969 9.57143 11.343 8.97619ZM2.42577 7.4881C0.99902 6.05952 0.99902 3.7381 2.42577 2.36905C3.13915 1.65476 4.03087 1.29762 4.98204 1.29762C5.9332 1.29762 6.82492 1.65476 7.5383 2.36905C8.25167 3.08333 8.60836 3.97619 8.60836 4.92857C8.60836 5.88095 8.25167 6.83333 7.5383 7.4881C6.82492 8.14286 5.9332 8.55952 4.98204 8.55952C4.03087 8.55952 3.0797 8.20238 2.42577 7.4881Z"
+      />
+    </svg>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "search-bar",
+  methods: {
+    onInput(event) {
+      this.value = event.target.value;
+      console.log(this.value);
+      if (this.value) {
+        this.$emit("search", this.value);
+      }
+    },
+  },
+  data() {
+    return {
+      value: "",
+    };
+  },
+});
+</script>
+
+<style scoped lang="scss">
+.search-bar {
+  position: relative;
+  width: min-content;
+
+  input {
+    width: 250px;
+    height: 36px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 10px;
+    padding: 0 10px;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+    background: var(--color-surface);
+
+    &:focus {
+      width: 300px;
+    }
+  }
+
+  .search-icon {
+    width: 14px;
+    height: 14px;
+    fill: var(--color-secondary);
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+</style>

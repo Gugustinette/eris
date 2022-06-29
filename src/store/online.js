@@ -190,5 +190,21 @@ export const useOnline = defineStore("online-store", {
           });
       });
     },
+    searchStyles(query) {
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/search?query=" + query, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            this.styles = data;
+            this.updateStyleState();
+            resolve(data);
+          });
+      });
+    },
   },
 });

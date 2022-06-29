@@ -30,6 +30,19 @@ export class StyleService {
     return this.styleModel.findOne({ _id: id }).exec();
   }
 
+  search(query: string) {
+    // Find in name or description
+    return this.styleModel
+      .find({
+        $or: [
+          { name: { $regex: query, $options: 'i' } },
+          { description: { $regex: query, $options: 'i' } },
+        ],
+      })
+      .limit(20)
+      .exec();
+  }
+
   update(id: string, updateStyleDto: UpdateStyleDto) {
     const updatedStyle = {
       ...updateStyleDto,

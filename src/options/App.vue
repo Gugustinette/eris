@@ -20,7 +20,10 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Comfortaa");
+@font-face {
+  font-family: "Comfortaa";
+  src: url("../assets/font/Comfortaa/Comfortaa-VariableFont_wght.ttf");
+}
 
 :root {
   --color-primary: #2a2b59;

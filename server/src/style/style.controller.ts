@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import { StyleService } from './style.service';
 import { CreateStyleDto } from './dto/create-style.dto';
@@ -48,6 +49,17 @@ export class StyleController {
       // Remove 'css' property from each style object
       style.css = undefined;
       return style;
+    });
+  }
+
+  @Get('search') // Use Query
+  search(@Query('query') query: string) {
+    return this.styleService.search(query).then((styles) => {
+      return styles.map((style) => {
+        // Remove 'css' property from each style object
+        style.css = undefined;
+        return style;
+      });
     });
   }
 
