@@ -15,9 +15,15 @@
         <div class="profil-name">You're not connected</div>
       </div>
       <Button content="Login" @click="online.showLogin = true" />
+      <Button
+        content="Sign Up"
+        :noBackground="true"
+        @click="online.showSignUp = true"
+      />
     </div>
   </div>
   <LoginView />
+  <SignUpView />
 </template>
 
 <script>
@@ -27,6 +33,7 @@ import { useOnline } from "../../store/online";
 // Components
 import Button from "@/components/form/Button.vue";
 import LoginView from "@/options/views/LoginView.vue";
+import SignUpView from "@/options/views/SignUpView.vue";
 
 export default {
   setup() {
@@ -42,6 +49,7 @@ export default {
   components: {
     Button,
     LoginView,
+    SignUpView,
   },
   mounted() {
     this.online.loadUser();

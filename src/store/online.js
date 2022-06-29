@@ -8,6 +8,7 @@ export const useOnline = defineStore("online-store", {
   state: () => ({
     styles: [],
     showLogin: false,
+    showSignUp: false,
     bearerToken: undefined,
     user: undefined,
   }),
@@ -77,6 +78,36 @@ export const useOnline = defineStore("online-store", {
     login(username, password) {
       return new Promise((resolve) => {
         fetch(API_URL + "/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const bearerToken = data.access_token;
+            const user = {
+              _id: data._id,
+              username: username,
+            };
+            this.bearerToken = bearerToken;
+            this.user = user;
+            chrome.storage.sync.set({
+              bearerToken: bearerToken,
+              user: user,
+            });
+            resolve(data);
+          });
+      });
+    },
+    // Sign Up
+    signup(username, password) {
+      return new Promise((resolve) => {
+        fetch(API_URL + "/auth/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

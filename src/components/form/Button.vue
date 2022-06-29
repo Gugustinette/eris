@@ -50,7 +50,7 @@ input {
 }
 
 .noBackground {
-  color: var(--font);
+  color: var(--color-secondary);
   background: transparent;
 }
 </style>
