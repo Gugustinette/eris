@@ -2,7 +2,7 @@
 import { defineStore } from "pinia";
 import { useStore } from "./index";
 
-const API_URL = "http://localhost:9050";
+const API_URL = process.env.VUE_APP_ERIS_API_URL;
 
 export const useOnline = defineStore("online-store", {
   state: () => ({

@@ -1,10 +1,11 @@
 <template>
-  <div class="modal-panel" @click.self="closeModalPanel">
+  <div class="style-modal-panel" @click.self="closeModalPanel">
     <div class="style-modal modal" v-if="style !== undefined">
       <div class="style-modal-header">
         <div class="style-modal-header-title">
           <h1>{{ style.name }}</h1>
           <p>by {{ style.username }}</p>
+          <p class="style-id">ID : {{ style._id }}</p>
         </div>
         <div
           class="button installed"
@@ -53,8 +54,12 @@
         <div class="style-modal-content-details">
           <p>{{ style.description }}</p>
           <h3 class="username">Author : {{ style.username }}</h3>
-          <h3 class="created">Created at : {{ style.createdAt }}</h3>
-          <h3 class="updated">Last update : {{ style.updatedAt }}</h3>
+          <h3 class="created">
+            Created at : {{ this.displayDate(style.createdAt) }}
+          </h3>
+          <h3 class="updated">
+            Last update : {{ this.displayDate(style.updatedAt) }}
+          </h3>
         </div>
       </div>
     </div>
@@ -87,7 +92,7 @@ export default {
   methods: {
     closeModalPanel() {
       // Select .modal-panel element
-      const modalPanel = document.querySelector(".modal-panel");
+      const modalPanel = document.querySelector(".style-modal-panel");
       if (modalPanel) {
         // Launch fadeInUp animation on it
         modalPanel.classList.add("out");
@@ -105,6 +110,17 @@ export default {
     updateStyle() {
       this.online.downloadStyle(this.style).then((style) => {
         this.store.editStyle(style);
+      });
+    },
+    displayDate(date) {
+      // Return date as Mon, 01 Jan 2020, 00:00
+      return new Date(date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
       });
     },
   },
@@ -127,6 +143,13 @@ export default {
     min-height: 80px;
     border-top-left-radius: var(--border-radius-medium);
     border-top-right-radius: var(--border-radius-medium);
+
+    .style-modal-header-title {
+      .style-id {
+        margin-top: 15px;
+        color: var(--color-gray-secondary);
+      }
+    }
 
     .button {
       display: flex;
@@ -181,7 +204,7 @@ export default {
   }
 }
 
-.modal-panel {
+.style-modal-panel {
   position: absolute;
   top: 0;
   left: 0;

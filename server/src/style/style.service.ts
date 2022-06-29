@@ -31,7 +31,7 @@ export class StyleService {
   }
 
   search(query: string) {
-    // Find in name or description
+    // Find in name or description or _id
     return this.styleModel
       .find({
         $or: [

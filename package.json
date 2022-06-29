@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service build --mode development --watch",
-    "build": "./scripts/build.sh",
+    "serve": "node ./node_modules/dotenv-cli/cli.js -e ./env/.dev.env ./scripts/serve.sh",
+    "build": "node ./node_modules/dotenv-cli/cli.js -e ./env/.prod.env ./scripts/build.sh",
     "lint": "vue-cli-service lint",
     "install-all": "./scripts/install.sh",
     "uninstall-all": "./scripts/uninstall.sh",
+    "server:install": "cd server && npm install",
     "server:dev": "cd server && npm run start:dev",
-    "server:prod": "cd server && npm run build"
+    "deploy": "./scripts/deploy.sh"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "dotenv-cli": "^5.1.0",
     "pinia": "^2.0.14",
     "simple-code-editor": "^1.2.2",
     "vue": "^3.2.13",

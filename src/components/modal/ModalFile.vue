@@ -200,6 +200,7 @@ input[type="file"] {
     transition: opacity 0.15s ease-in-out;
 
     h2 {
+      margin-top: 15px;
       color: var(--color-secondary);
     }
 
