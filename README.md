@@ -29,4 +29,4 @@ npm run lint
 
 ## Made by
 - [Augustin MERCIER "Gugustinette"]( https://twitter.com/gugustinette )
-- [Jason MOULIN "Zuukarimoto"]( https://sallt.fr )
+- [Jason MOULIN "Zukaarimoto"]( https://sallt.fr )
