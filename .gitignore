@@ -2,6 +2,7 @@
 node_modules
 /dist
 /build
+/deploy
 
 
 # local env files

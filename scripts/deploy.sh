@@ -1,4 +1,5 @@
 # Deploy Server
 cd server
 
-pm2 --name Eris_Server start npm -- run build
+npm run build
+pm2 --name Eris_Server start node ./dist/main.js
