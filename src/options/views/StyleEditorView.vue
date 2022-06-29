@@ -70,6 +70,8 @@ export default {
         // Dates for versioning
         this.editingStyle.updatedAt = remoteStyle.updatedAt;
         this.editingStyle.createdAt = remoteStyle.createdAt;
+        // New id
+        this.editingStyle._id = remoteStyle._id;
         // Save as local style
         this.store.editStyle(this.editingStyle);
         // States

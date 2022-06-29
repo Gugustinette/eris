@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "node ./node_modules/dotenv-cli/cli.js -e ./env/.dev.env ./scripts/serve.sh",
+    "serve:prod": "node ./node_modules/dotenv-cli/cli.js -e ./env/.prod.env ./scripts/serve.sh",
     "build": "node ./node_modules/dotenv-cli/cli.js -e ./env/.prod.env ./scripts/build.sh",
     "lint": "vue-cli-service lint",
     "install-all": "./scripts/install.sh",
