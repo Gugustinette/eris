@@ -11,6 +11,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  Res,
 } from '@nestjs/common';
 import { StyleService } from './style.service';
 import { CreateStyleDto } from './dto/create-style.dto';
@@ -69,7 +70,7 @@ export class StyleController {
   }
 
   @Get('download/:id')
-  downloadOne(@Request() req, @Param('id') id: string) {
+  downloadOne(@Param('id') id: string) {
     return this.styleService.findOne(id).then((style) => {
       // Increase the number of downloads
       style.nbDownloads += 1;
@@ -92,13 +93,14 @@ export class StyleController {
     return this.styleService.remove(id);
   }
 
+  @UseGuards(JwtAuthGuard, StyleGuard)
   @Post('images/:id')
   @UseInterceptors(
     FilesInterceptor('files', 3, {
       limits: { fileSize: 1000000 },
     }),
   )
-  uploadFile(
+  uploadImages(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('id') id: string,
   ) {
@@ -119,5 +121,30 @@ export class StyleController {
         },
       );
     });
+  }
+
+  @Get('images/:id/:image')
+  @UseInterceptors(
+    FilesInterceptor('files', 3, {
+      limits: { fileSize: 1000000 },
+    }),
+  )
+  getImage(@Param('id') id: string, @Param('image') image: string, @Res() res) {
+    // Check if the image exists
+    if (fs.existsSync(`./cloud/images/${id}/${image}.png`)) {
+      // Create read stream
+      const readStream = fs.createReadStream(
+        `./cloud/images/${id}/${image}.png`,
+      );
+      // Set the content type to png
+      res.set('Content-Type', 'image/png');
+      // Pipe the read stream to the response
+      readStream.pipe(res);
+    } else {
+      // Send json error
+      res.status(404).send({
+        error: 'Image not found',
+      });
+    }
   }
 }
