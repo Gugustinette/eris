@@ -19,6 +19,7 @@ import { UpdateStyleDto } from './dto/update-style.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { StyleGuard } from './style.guard';
 import { HtmlUtil } from 'src/util/html.util';
+import { FormatageUtil } from 'src/util/formatage.util';
 import { FilesInterceptor } from '@nestjs/platform-express';
 // Import fs
 import * as fs from 'fs';
@@ -28,6 +29,7 @@ export class StyleController {
   constructor(
     private readonly styleService: StyleService,
     private readonly htmlUtil: HtmlUtil,
+    private readonly formatageUtil: FormatageUtil,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -104,23 +106,30 @@ export class StyleController {
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('id') id: string,
   ) {
+    // Initialize imageArray
+    const images = [];
+
     // If not exist, create folder ./cloud/images/[ID]
     if (!fs.existsSync(`./cloud/images/${id}`)) {
       fs.mkdirSync(`./cloud/images/${id}`);
+    } else {
+      // Remove any images inside the folder
+      fs.readdirSync(`./cloud/images/${id}`).forEach((file) => {
+        fs.unlinkSync(`./cloud/images/${id}/${file}`);
+      });
     }
 
     // Write the files to ./cloud/images/[ID]/[FILE]
     files.forEach((file) => {
-      fs.writeFile(
+      images.push(this.formatageUtil.createIdFromImage(file.buffer));
+      fs.writeFileSync(
         `./cloud/images/${id}/${file.originalname}`,
         file.buffer,
-        (err) => {
-          if (err) {
-            console.log(err);
-          }
-        },
       );
     });
+
+    // Return the images
+    return this.styleService.setImages(id, images);
   }
 
   @Get('images/:id/:image')

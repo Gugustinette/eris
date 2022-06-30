@@ -58,4 +58,10 @@ export class StyleService {
   remove(id: string) {
     return this.styleModel.deleteOne({ _id: id }).exec();
   }
+
+  setImages(id: string, images: string[]) {
+    return this.styleModel
+      .findOneAndUpdate({ _id: id }, { images }, { new: true })
+      .exec();
+  }
 }

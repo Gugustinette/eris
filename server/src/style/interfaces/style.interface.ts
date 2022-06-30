@@ -9,6 +9,7 @@ export interface IStyle extends Document {
   domain: string;
   css: string;
   nbDownloads: number;
+  images: string[];
   createdAt: Date;
   updatedAt: Date;
 }
