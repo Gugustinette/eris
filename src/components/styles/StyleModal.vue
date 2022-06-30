@@ -50,6 +50,20 @@
           <h3>Install</h3>
         </div>
       </div>
+      <div class="style-modal-images" v-if="this.style.images.length > 0">
+        <div class="style-modal-image-background"></div>
+        <div class="style-modal-image-wrapper">
+          <div
+            class="style-modal-image"
+            v-for="image in this.style.images"
+            :key="image"
+          >
+            <img
+              :src="`http://localhost:9050/style/images/${this.style._id}/${image}`"
+            />
+          </div>
+        </div>
+      </div>
       <div class="style-modal-content">
         <div class="style-modal-content-details">
           <p>{{ style.description }}</p>
@@ -89,6 +103,9 @@ export default {
   mounted() {
     this.style = this.store.actualStoreStyle;
   },
+  updated() {
+    this.updateBackgroundImage();
+  },
   methods: {
     closeModalPanel() {
       // Select .modal-panel element
@@ -123,6 +140,16 @@ export default {
         minute: "numeric",
       });
     },
+    updateBackgroundImage() {
+      // Select .style-modal-images
+      const styleModalImageBG = document.querySelector(
+        ".style-modal-image-background"
+      );
+      // If any image, make the first image the background image
+      if (styleModalImageBG && this.style.images.length > 0) {
+        styleModalImageBG.style.backgroundImage = `url(http://localhost:9050/style/images/${this.style._id}/${this.style.images[0]})`;
+      }
+    },
   },
 };
 </script>
@@ -130,6 +157,7 @@ export default {
 <style lang="scss" scoped>
 .style-modal {
   width: 85%;
+  max-width: 85vw;
   background: var(--color-surface);
   border-radius: var(--border-radius-medium);
 
@@ -186,6 +214,49 @@ export default {
 
       svg {
         fill: var(--color-secondary);
+      }
+    }
+  }
+
+  .style-modal-images {
+    position: relative;
+    overflow: hidden;
+
+    .style-modal-image-background {
+      position: absolute;
+      // Blur & Darken
+      filter: blur(5px) brightness(0.5);
+      -webkit-filter: blur(5px) brightness(0.5);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .style-modal-image-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      height: 500px;
+      overflow-x: scroll;
+
+      .style-modal-image {
+        min-height: calc(40 * 9px);
+        height: calc(40 * 9px);
+        min-width: calc(40 * 16px);
+        width: calc(40 * 16px);
+        margin: 20px 30px;
+        z-index: 10;
+
+        img {
+          height: 100%;
+          width: 100%;
+          border-radius: var(--border-radius);
+        }
       }
     }
   }

@@ -121,11 +121,9 @@ export class StyleController {
 
     // Write the files to ./cloud/images/[ID]/[FILE]
     files.forEach((file) => {
-      images.push(this.formatageUtil.createIdFromImage(file.buffer));
-      fs.writeFileSync(
-        `./cloud/images/${id}/${file.originalname}`,
-        file.buffer,
-      );
+      const imageId = this.formatageUtil.createIdFromImage(file.buffer);
+      images.push(imageId);
+      fs.writeFileSync(`./cloud/images/${id}/${imageId}.png`, file.buffer);
     });
 
     // Return the images
