@@ -51,9 +51,6 @@ export default {
     LoginView,
     SignUpView,
   },
-  mounted() {
-    this.online.loadUser();
-  },
 };
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <div class="context-menu">
+    <div class="action" @click="openDetails">Details</div>
     <div class="action" @click="renameStyle">Rename</div>
     <div class="separator"></div>
     <div class="action red" @click="deleteStyle">Delete</div>
@@ -36,6 +37,9 @@ export default defineComponent({
     renameStyle() {
       // Emit rename event
       this.$emit("rename");
+    },
+    openDetails() {
+      this.store.actualOpenedStyle = this.style;
     },
   },
 });

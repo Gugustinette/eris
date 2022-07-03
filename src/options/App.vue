@@ -5,19 +5,37 @@
   </div>
   <AddStyle />
   <ImportStyle />
+  <StyleModal v-if="store.actualOpenedStyle !== undefined" />
 </template>
 
 <script>
+import { useStore } from "@/store";
+import { useOnline } from "@/store/online";
+
 import Navbar from "@/components/navbar/Navbar.vue";
 import AddStyle from "@/options/views/AddStyleView.vue";
 import ImportStyle from "./views/ImportStyleView.vue";
+import StyleModal from "@/components/styles/StyleModal.vue";
 
 export default {
+  setup() {
+    const store = useStore();
+    const online = useOnline();
+
+    return {
+      store,
+      online,
+    };
+  },
   name: "App",
   components: {
     Navbar,
     AddStyle,
     ImportStyle,
+    StyleModal,
+  },
+  mounted() {
+    this.online.loadUser();
   },
 };
 </script>

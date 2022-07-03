@@ -7,7 +7,7 @@ export const useStore = defineStore("main-store", {
     showAddStyle: false,
     showImportStyle: false,
     editorContextMenu: "",
-    actualStoreStyle: undefined,
+    actualOpenedStyle: undefined,
   }),
   actions: {
     // Get css from chrome extension storage

@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     openStyle() {
-      this.store.actualStoreStyle = this.style;
+      this.store.actualOpenedStyle = this.style;
     },
     downloadStyle(style, force) {
       // Check if style is allready downloaded

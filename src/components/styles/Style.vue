@@ -38,12 +38,7 @@ export default {
   },
   methods: {
     openStyle(style) {
-      this.$router.push({
-        name: "style-editor",
-        params: {
-          styleId: style._id,
-        },
-      });
+      this.store.actualOpenedStyle = style;
     },
   },
   mounted() {
