@@ -79,6 +79,9 @@ export const useStore = defineStore("main-store", {
         if (s._id === style._id) {
           s.name = style.name;
           s.domain = style.domain;
+          if (style.description) {
+            s.description = style.description;
+          }
         }
       });
       this.saveToChromeStorage();

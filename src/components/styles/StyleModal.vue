@@ -1,11 +1,19 @@
 <template>
-  <div class="style-modal-panel" @click.self="closeModalPanel">
+  <div
+    :class="{
+      'style-modal-panel': true,
+      editable: editable,
+    }"
+    @click.self="closeModalPanel"
+  >
     <div class="style-modal modal" v-if="style !== undefined">
       <div class="style-modal-header">
         <div class="style-modal-header-title">
-          <h1>{{ style.name }}</h1>
-          <p v-if="style.username">by {{ style.username }}</p>
-          <p v-else>Not published yet</p>
+          <div class="row">
+            <h1 class="input-editable" ref="styleName">{{ style.name }}</h1>
+            <h1 class="separator">/</h1>
+            <h2 class="input-editable" ref="styleDomain">{{ style.domain }}</h2>
+          </div>
           <p class="style-id">ID : {{ style._id }}</p>
         </div>
         <div class="style-modal-header-actions">
@@ -15,6 +23,7 @@
             v-if="
               this.online.user && this.online.user.username === style.username
             "
+            @click="toggleEditStyle"
           >
             <svg
               width="24"
@@ -94,10 +103,13 @@
       </div>
       <div class="style-modal-content">
         <div class="style-modal-content-details">
-          <p>{{ style.description }}</p>
+          <p ref="styleDescription" class="input-editable">
+            {{ style.description }}
+          </p>
           <h3 class="username" v-if="style.username">
             Author : {{ style.username }}
           </h3>
+          <h3 v-else>Not published yet</h3>
           <h3 class="created" v-if="style.createdAt">
             Created at : {{ this.displayDate(style.createdAt) }}
           </h3>
@@ -128,6 +140,7 @@ export default {
   data() {
     return {
       style: undefined,
+      editable: false,
     };
   },
   mounted() {
@@ -184,6 +197,43 @@ export default {
         styleModalImageBG.style.backgroundImage = `url(http://localhost:9050/style/images/${this.style._id}/${this.style.images[0]})`;
       }
     },
+    toggleEditStyle() {
+      this.editable = !this.editable;
+      // Make elements editable
+      this.$refs.styleName.contentEditable = this.editable;
+      this.$refs.styleDomain.contentEditable = this.editable;
+      this.$refs.styleDescription.contentEditable = this.editable;
+      // If editable, attach save listeners
+      if (this.editable) {
+        this.attachSaveListener(this.$refs.styleName, "input");
+        this.attachSaveListener(this.$refs.styleDomain, "input");
+        this.attachSaveListener(this.$refs.styleDescription, "input");
+      }
+    },
+    attachSaveListener(element, event) {
+      element.addEventListener(event, (e) => {
+        e.preventDefault();
+        // If text contains enter key, stop editing
+        if (element.innerText.includes("\n") && this.editable) {
+          this.toggleEditStyle();
+          this.$refs.styleName.innerText =
+            this.$refs.styleName.innerText.replace("\n", "");
+          this.$refs.styleDomain.innerText =
+            this.$refs.styleDomain.innerText.replace("\n", "");
+          this.$refs.styleDescription.innerText =
+            this.$refs.styleDescription.innerText.replace("\n", "");
+          this.editStyle();
+        }
+      });
+    },
+    editStyle() {
+      this.store.renameStyle({
+        _id: this.style._id,
+        name: this.$refs.styleName.innerText,
+        domain: this.$refs.styleDomain.innerText,
+        description: this.$refs.styleDescription.innerText,
+      });
+    },
   },
 };
 </script>
@@ -206,6 +256,25 @@ export default {
     border-top-right-radius: var(--border-radius-medium);
 
     .style-modal-header-title {
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        * {
+          white-space: nowrap;
+        }
+
+        .separator {
+          margin: 0px 10px;
+        }
+
+        h2 {
+          color: var(--color-gray-secondary);
+        }
+      }
+
       .style-id {
         margin-top: 15px;
         color: var(--color-gray-secondary);
@@ -332,6 +401,10 @@ export default {
       margin-bottom: 10px;
     }
   }
+
+  .input-editable {
+    transition: all 0.15s ease-in-out;
+  }
 }
 
 .style-modal-panel {
@@ -360,6 +433,14 @@ export default {
     transition: all 100ms;
     -webkit-transition-delay: 5s;
     transition-delay: 5s;
+  }
+}
+
+.editable {
+  .input-editable {
+    background: whitesmoke;
+    color: var(--color-primary) !important;
+    padding: 10px 15px;
   }
 }
 
