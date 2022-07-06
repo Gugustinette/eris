@@ -70,6 +70,9 @@ export const useStore = defineStore("main-store", {
           if (style.updatedLocal) {
             s.updatedLocal = style.updatedLocal;
           }
+          if (style.images) {
+            s.images = style.images;
+          }
         }
       });
       this.saveToChromeStorage();

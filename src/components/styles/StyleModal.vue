@@ -93,9 +93,18 @@
           <div
             class="style-modal-image"
             v-for="image in this.style.images"
+            :id="image"
+            :draggable="this.editable"
+            @dragstart="this.dragStart($event, image)"
+            @drop="this.onDrop($event)"
+            @dragenter="this.onDragEnter($event)"
+            @dragleave="this.onDragLeave($event)"
+            @dragover.prevent
             :key="image"
           >
             <img
+              :draggable="!this.editable"
+              @drop="this.onDrop($event)"
               :src="`http://localhost:9050/style/images/${this.style._id}/${image}`"
             />
           </div>
@@ -145,6 +154,10 @@ export default {
   },
   mounted() {
     this.style = this.store.actualOpenedStyle;
+    // Convert this.style.images from object to array keeping values
+    if (this.style.images) {
+      this.style.images = Object.values(this.style.images);
+    }
   },
   updated() {
     this.updateBackgroundImage();
@@ -227,12 +240,67 @@ export default {
       });
     },
     editStyle() {
-      this.store.renameStyle({
-        _id: this.style._id,
-        name: this.$refs.styleName.innerText,
-        domain: this.$refs.styleDomain.innerText,
-        description: this.$refs.styleDescription.innerText,
+      this.style.name = this.$refs.styleName.innerText;
+      this.style.domain = this.$refs.styleDomain.innerText;
+      this.style.description = this.$refs.styleDescription.innerText;
+      this.store.editStyle(this.style);
+    },
+    dragStart(event, item) {
+      if (!this.editable) return;
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("itemID", item);
+    },
+    onDrop(event) {
+      if (!this.editable) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const itemID = event.dataTransfer.getData("itemID");
+      let target = event.target;
+      // If target is img, take parent
+      if (target.tagName === "IMG") {
+        target = target.parentElement;
+      }
+      // If target is style-modal-image
+      if (target.classList.contains("style-modal-image")) {
+        // Target ID
+        const targetID = target.id;
+        // Switch images order
+        const index = this.style.images.indexOf(itemID);
+        const indexTarget = this.style.images.indexOf(targetID);
+        const images = this.style.images;
+        // Index goes to indexTarget / indexTarget goes to index
+        images[index] = images[indexTarget];
+        images[indexTarget] = itemID;
+        // Update style
+        this.style.images = images;
+      }
+      // Select all images
+      const images = document.querySelectorAll(".style-modal-image");
+      // Remove .drag-over class
+      images.forEach((image) => {
+        image.classList.remove("drag-over");
+        // Select childrens of image
+        const children = image.children;
+        // Remove .drag-over class from children
+        if (children && children.length > 0) {
+          for (let i = 0; i < children.length; i++) {
+            children[i].classList.remove("drag-over");
+          }
+        }
       });
+    },
+    onDragEnter(event) {
+      if (!this.editable) return;
+      event.preventDefault();
+      // Add class to target element
+      event.target.classList.add("drag-over");
+    },
+    onDragLeave(event) {
+      if (!this.editable) return;
+      event.preventDefault();
+      // Add class to target element
+      event.target.classList.remove("drag-over");
     },
   },
 };
@@ -379,12 +447,18 @@ export default {
         width: calc(40 * 16px);
         padding: 20px 30px;
         z-index: 10;
+        transition: all 0.15s ease-in-out;
 
         img {
           height: 100%;
           width: 100%;
           border-radius: var(--border-radius);
+          transition: all 0.15s ease-in-out;
         }
+      }
+
+      .drag-over {
+        transform: scale(1.1);
       }
     }
   }
@@ -441,6 +515,17 @@ export default {
     background: whitesmoke;
     color: var(--color-primary) !important;
     padding: 10px 15px;
+  }
+
+  .style-modal-image-wrapper {
+    justify-content: flex-start !important;
+    .style-modal-image {
+      cursor: move;
+      min-height: calc(20 * 9px) !important;
+      height: calc(20 * 9px) !important;
+      min-width: calc(20 * 16px) !important;
+      width: calc(20 * 16px) !important;
+    }
   }
 }
 
