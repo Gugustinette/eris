@@ -108,6 +108,35 @@
               :src="`http://localhost:9050/style/images/${this.style._id}/${image}`"
             />
           </div>
+          <label
+            class="file-input"
+            v-if="this.editable && this.style.images.length < 4"
+          >
+            <input type="file" @change="handleImage" />
+            <svg
+              width="48"
+              height="50"
+              viewBox="0 0 24 25"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4 5.68809C4 3.88644 5.40423 2.28809 7.31339 2.28809H12.3425C13.3927 2.28809 14.4567 2.67989 15.2604 3.47893L15.2701 3.48859L18.8866 7.18414C19.6883 7.98458 20.0956 9.15706 19.9809 10.2452V18.8881C19.9809 20.6897 18.5767 22.2881 16.6675 22.2881H7.31339C5.40423 22.2881 4 20.6897 4 18.8881V5.68809ZM7.31339 4.28809C6.60742 4.28809 6 4.88974 6 5.68809V18.8881C6 19.6864 6.60742 20.2881 7.31339 20.2881H16.6675C17.3735 20.2881 17.9809 19.6864 17.9809 18.8881V10.1881C17.9809 10.1464 17.9835 10.1047 17.9888 10.0633C18.0504 9.57265 17.8563 8.98011 17.4712 8.59724L17.4615 8.58758L13.8459 4.89292C13.443 4.49478 12.8996 4.28809 12.3425 4.28809H7.31339Z"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 12.2881C12.5523 12.2881 13 12.7358 13 13.2881V17.2881C13 17.8404 12.5523 18.2881 12 18.2881C11.4477 18.2881 11 17.8404 11 17.2881V13.2881C11 12.7358 11.4477 12.2881 12 12.2881Z"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9 15.2881C9 14.7358 9.44772 14.2881 10 14.2881H14C14.5523 14.2881 15 14.7358 15 15.2881C15 15.8404 14.5523 16.2881 14 16.2881H10C9.44772 16.2881 9 15.8404 9 15.2881Z"
+              />
+            </svg>
+            <h3>Add Image</h3>
+          </label>
         </div>
       </div>
       <div class="style-modal-content">
@@ -302,11 +331,24 @@ export default {
       // Add class to target element
       event.target.classList.remove("drag-over");
     },
+    handleImage(event) {
+      if (!this.editable) return;
+      const file = event.target.files[0];
+      // If file is not an image, return
+      if (!file.type.includes("image")) return;
+      // If file is too big, return
+      if (file.size > 1000000) return;
+      console.log(file);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+input[type="file"] {
+  display: none;
+}
+
 .style-modal {
   width: 85%;
   max-width: 85vw;
@@ -459,6 +501,37 @@ export default {
 
       .drag-over {
         transform: scale(1.1);
+      }
+
+      .file-input {
+        color: var(--color-secondary);
+        border: solid 1px var(--color-secondary);
+        min-height: calc(20 * 9px) !important;
+        height: calc(20 * 9px) !important;
+        min-width: calc(20 * 16px) !important;
+        width: calc(20 * 16px) !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0.6;
+        transition: opacity 0.15s ease-in-out;
+
+        h3 {
+          margin-top: 15px;
+          color: var(--color-secondary);
+        }
+
+        svg {
+          fill: var(--color-secondary);
+        }
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
   }
