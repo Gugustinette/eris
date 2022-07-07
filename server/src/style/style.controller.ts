@@ -124,6 +124,13 @@ export class StyleController {
       fs.mkdirSync(`./cloud/images/${id}`);
     } else {
       if (old_images && old_images.length > 0) {
+        old_images.forEach((imageId) => {
+          if (
+            imageId !== 'new-image' &&
+            !fs.existsSync(`./cloud/images/${id}/${imageId}.png`)
+          )
+            old_images.splice(1, old_images.indexOf(imageId));
+        });
         // Remove images inside the folder
         fs.readdirSync(`./cloud/images/${id}`).forEach((file) => {
           // Get file name without .png
@@ -147,14 +154,23 @@ export class StyleController {
       // Create image id
       const imageId = this.formatageUtil.createIdFromImage(file.buffer);
       if (old_images && old_images.length > 0) {
-        old_images[old_images.indexOf('new-image')] = imageId;
+        if (old_images.indexOf('new-image') !== -1) {
+          old_images[old_images.indexOf('new-image')] = imageId;
+          // If not exist, write file
+          if (!fs.existsSync(`./cloud/images/${id}/${imageId}.png`)) {
+            fs.writeFileSync(
+              `./cloud/images/${id}/${imageId}.png`,
+              file.buffer,
+            );
+          }
+        }
       } else {
         // Add id to image array
         images.push(imageId);
-      }
-      // If not exist, write file
-      if (!fs.existsSync(`./cloud/images/${id}/${imageId}.png`)) {
-        fs.writeFileSync(`./cloud/images/${id}/${imageId}.png`, file.buffer);
+        // If not exist, write file
+        if (!fs.existsSync(`./cloud/images/${id}/${imageId}.png`)) {
+          fs.writeFileSync(`./cloud/images/${id}/${imageId}.png`, file.buffer);
+        }
       }
     });
 
@@ -165,6 +181,7 @@ export class StyleController {
     } else {
       final_images = images;
     }
+    final_images.length = 3;
 
     // Return the images
     return this.styleService.setImages(id, final_images);
