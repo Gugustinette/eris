@@ -105,29 +105,69 @@ export class StyleController {
   uploadImages(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('id') id: string,
+    @Body() body: any,
   ) {
     // Initialize imageArray
     const images = [];
+    // Get images' ids keeped by user if any
+    let old_images = undefined;
+    if (body.imagesID) {
+      try {
+        old_images = JSON.parse(body.imagesID);
+      } catch (e) {
+        return;
+      }
+    }
 
     // If not exist, create folder ./cloud/images/[ID]
     if (!fs.existsSync(`./cloud/images/${id}`)) {
       fs.mkdirSync(`./cloud/images/${id}`);
     } else {
-      // Remove any images inside the folder
-      fs.readdirSync(`./cloud/images/${id}`).forEach((file) => {
-        fs.unlinkSync(`./cloud/images/${id}/${file}`);
-      });
+      if (old_images && old_images.length > 0) {
+        // Remove images inside the folder
+        fs.readdirSync(`./cloud/images/${id}`).forEach((file) => {
+          // Get file name without .png
+          const filename = file.split('.')[0];
+          // If image isn't keeped by user
+          if (old_images.indexOf(filename) === -1) {
+            // Delete image
+            fs.unlinkSync(`./cloud/images/${id}/${file}`);
+          }
+        });
+      } else {
+        // Remove any images inside the folder
+        fs.readdirSync(`./cloud/images/${id}`).forEach((file) => {
+          fs.unlinkSync(`./cloud/images/${id}/${file}`);
+        });
+      }
     }
 
     // Write the files to ./cloud/images/[ID]/[FILE]
     files.forEach((file) => {
+      // Create image id
       const imageId = this.formatageUtil.createIdFromImage(file.buffer);
-      images.push(imageId);
-      fs.writeFileSync(`./cloud/images/${id}/${imageId}.png`, file.buffer);
+      if (old_images && old_images.length > 0) {
+        old_images[old_images.indexOf('new-image')] = imageId;
+      } else {
+        // Add id to image array
+        images.push(imageId);
+      }
+      // If not exist, write file
+      if (!fs.existsSync(`./cloud/images/${id}/${imageId}.png`)) {
+        fs.writeFileSync(`./cloud/images/${id}/${imageId}.png`, file.buffer);
+      }
     });
 
+    // Build final images array
+    let final_images = undefined;
+    if (old_images && old_images.length > 0) {
+      final_images = old_images;
+    } else {
+      final_images = images;
+    }
+
     // Return the images
-    return this.styleService.setImages(id, images);
+    return this.styleService.setImages(id, final_images);
   }
 
   @Get('images/:id/:image')
