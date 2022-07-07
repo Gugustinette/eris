@@ -11,7 +11,9 @@
     "uninstall-all": "./scripts/uninstall.sh",
     "server:install": "cd server && npm install",
     "server:dev": "cd server && npm run start:dev",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "website": "cd website && npm run serve",
+    "website:prod": "cd website && npm run serve"
   },
   "dependencies": {
     "core-js": "^3.8.3",
