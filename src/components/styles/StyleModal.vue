@@ -17,13 +17,48 @@
           <p class="style-id">ID : {{ style._id }}</p>
         </div>
         <div class="style-modal-header-actions">
+          <!-- Cancel Button -->
+          <div v-if="this.editable" class="cancel-button" @click="cancelEdit">
+            <svg
+              width="24"
+              height="25"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM10 18C5.6 18 2 14.4 2 10C2 5.6 5.6 2 10 2C14.4 2 18 5.6 18 10C18 14.4 14.4 18 10 18Z"
+              />
+              <path
+                d="M14 6.00001C13.6 5.60001 13 5.60001 12.6 6.00001L10 8.60001L7.40001 6.00001C7.00001 5.60001 6.40001 5.60001 6.00001 6.00001C5.60001 6.40001 5.60001 7.00001 6.00001 7.40001L8.60001 10L6.00001 12.6C5.60001 13 5.60001 13.6 6.00001 14C6.20001 14.2 6.50001 14.3 6.70001 14.3C6.90001 14.3 7.20001 14.2 7.40001 14L10 11.4L12.6 14C12.8 14.2 13.1 14.3 13.3 14.3C13.5 14.3 13.8 14.2 14 14C14.4 13.6 14.4 13 14 12.6L11.4 10L14 7.40001C14.4 7.00001 14.4 6.40001 14 6.00001Z"
+              />
+            </svg>
+          </div>
+          <!-- Save Button -->
+          <div
+            v-if="this.editable"
+            class="save-button"
+            @click.prevent="toggleEditStyle(true)"
+          >
+            <svg
+              width="24"
+              height="27"
+              viewBox="0 0 20 22"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.6301 0.20194C19.2355 -0.093961 18.6437 -0.093961 18.2491 0.399208L15.3884 3.95002C13.8101 2.86505 11.9359 2.27325 9.86437 2.27325C4.43896 2.27325 0 6.71177 0 12.1366C0 17.5615 4.43896 22 9.86437 22C15.2898 22 19.7287 17.5615 19.7287 12.1366C19.7287 10.1639 19.1369 8.38854 18.1504 6.8104L17.4599 7.59947L16.7694 8.38854L11.0481 15.5888C10.8508 15.7861 10.5549 15.9833 10.2589 15.9833C9.96301 15.9833 9.76572 15.8847 9.56843 15.6874L5.32676 11.1503C5.03083 10.8544 5.03083 10.3612 5.12947 10.0653C5.12947 9.96668 5.22811 9.86805 5.32676 9.76941C5.72133 9.37488 6.31319 9.37488 6.70777 9.76941L10.1603 13.5175L15.5857 6.71177L16.1776 5.9227L16.7694 5.13363L19.6301 1.58281C20.1233 1.18828 20.1233 0.596475 19.6301 0.20194Z"
+              />
+            </svg>
+          </div>
           <!-- Edit Button -->
           <div
             class="edit-button"
             v-if="
-              this.online.user && this.online.user.username === style.username
+              this.online.user &&
+              this.online.user.username === style.username &&
+              !this.editable
             "
-            @click="toggleEditStyle"
+            @click.prevent="toggleEditStyle(false)"
           >
             <svg
               width="24"
@@ -86,8 +121,31 @@
       </div>
       <div
         class="style-modal-images"
-        v-if="this.style.images && this.style.images.length > 0"
+        v-if="
+          (this.style.images && this.style.images.length > 0) || this.editable
+        "
       >
+        <div
+          class="delete-image-zone"
+          id="delete-image-zone"
+          v-if="this.editable"
+          @drop="this.onDeleteImage"
+          @dragenter.prevent
+          @dragover.prevent
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M4.05879 0.545455C4.05879 0.244208 4.28599 0 4.56626 0H8.21999C8.50025 0 8.72745 0.244208 8.72745 0.545455C8.72745 0.846701 8.50025 1.09091 8.21999 1.09091H4.56626C4.28599 1.09091 4.05879 0.846701 4.05879 0.545455ZM0.811035 2.50909C0.811035 2.20784 1.03823 1.96364 1.3185 1.96364H11.4678C11.748 1.96364 11.9752 2.20784 11.9752 2.50909C11.9752 2.81034 11.748 3.05454 11.4678 3.05454H10.7573V9.49091C10.7573 10.8831 9.71816 12 8.42297 12H4.36327C3.05901 12 2.02894 10.8732 2.02894 9.43636V3.05454H1.3185C1.03823 3.05454 0.811035 2.81034 0.811035 2.50909ZM3.04387 3.05454V9.43636C3.04387 10.2904 3.63768 10.9091 4.36327 10.9091H8.42297C9.15763 10.9091 9.74238 10.2806 9.74238 9.49091V3.05454H3.04387ZM5.02298 4.47273C5.30324 4.47273 5.53044 4.71694 5.53044 5.01818V9C5.53044 9.30125 5.30324 9.54545 5.02298 9.54545C4.74271 9.54545 4.51551 9.30125 4.51551 9V5.01818C4.51551 4.71694 4.74271 4.47273 5.02298 4.47273ZM7.76327 4.47273C8.04354 4.47273 8.27074 4.71694 8.27074 5.01818V9C8.27074 9.30125 8.04354 9.54545 7.76327 9.54545C7.48301 9.54545 7.25581 9.30125 7.25581 9V5.01818C7.25581 4.71694 7.48301 4.47273 7.76327 4.47273Z"
+            />
+          </svg>
+        </div>
         <div class="style-modal-image-background"></div>
         <div class="style-modal-image-wrapper">
           <div
@@ -103,6 +161,13 @@
             :key="image"
           >
             <img
+              v-if="image.split('/')[0] === 'new-image'"
+              :draggable="!this.editable"
+              @drop="this.onDrop($event)"
+              :src="this.local_images[image].url"
+            />
+            <img
+              v-else
               :draggable="!this.editable"
               @drop="this.onDrop($event)"
               :src="`http://localhost:9050/style/images/${this.style._id}/${image}`"
@@ -110,7 +175,7 @@
           </div>
           <label
             class="file-input"
-            v-if="this.editable && this.style.images.length < 4"
+            v-if="this.editable && this.style.images.length < 3"
           >
             <input type="file" @change="handleImage" />
             <svg
@@ -179,6 +244,8 @@ export default {
     return {
       style: undefined,
       editable: false,
+      api_url: process.env.VUE_APP_ERIS_API_URL,
+      local_images: {},
     };
   },
   mounted() {
@@ -236,10 +303,16 @@ export default {
         this.style.images &&
         this.style.images.length > 0
       ) {
-        styleModalImageBG.style.backgroundImage = `url(http://localhost:9050/style/images/${this.style._id}/${this.style.images[0]})`;
+        if (this.style.images[0].split("/")[0] === "new-image") {
+          styleModalImageBG.style.backgroundImage = `url(${
+            this.local_images[this.style.images[0]].url
+          })`;
+        } else {
+          styleModalImageBG.style.backgroundImage = `url(${this.api_url}/style/images/${this.style._id}/${this.style.images[0]})`;
+        }
       }
     },
-    toggleEditStyle() {
+    toggleEditStyle(save) {
       this.editable = !this.editable;
       // Make elements editable
       this.$refs.styleName.contentEditable = this.editable;
@@ -250,6 +323,10 @@ export default {
         this.attachSaveListener(this.$refs.styleName, "input");
         this.attachSaveListener(this.$refs.styleDomain, "input");
         this.attachSaveListener(this.$refs.styleDescription, "input");
+      }
+      // If need to save
+      if (save) {
+        this.editStyle();
       }
     },
     attachSaveListener(element, event) {
@@ -272,7 +349,35 @@ export default {
       this.style.name = this.$refs.styleName.innerText;
       this.style.domain = this.$refs.styleDomain.innerText;
       this.style.description = this.$refs.styleDescription.innerText;
-      this.store.editStyle(this.style);
+      // Create final images file array
+      const filesToSend = [];
+      this.style.images.forEach((image) => {
+        if (image.split("/")[0] === "new-image") {
+          const localImage = this.local_images[image];
+          filesToSend.push(localImage.file);
+        }
+      });
+      // Create final images ID array
+      const imagesToSend = this.style.images.map((image) => {
+        return image.split("/")[0];
+      });
+
+      // Edit style
+      this.online.editStyle(this.style).then(() => {
+        this.online
+          .editStyleImages(
+            {
+              _id: this.style._id,
+              images: imagesToSend,
+            },
+            filesToSend
+          )
+          .then((data) => {
+            console.log(data);
+            this.style.images = data.images;
+            this.store.editStyle(this.style);
+          });
+      });
     },
     dragStart(event, item) {
       if (!this.editable) return;
@@ -331,6 +436,15 @@ export default {
       // Add class to target element
       event.target.classList.remove("drag-over");
     },
+    onDeleteImage(event) {
+      if (!this.editable) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const itemID = event.dataTransfer.getData("itemID");
+      this.style.images = this.style.images.filter((images) => {
+        return images !== itemID;
+      });
+    },
     handleImage(event) {
       if (!this.editable) return;
       const file = event.target.files[0];
@@ -338,7 +452,29 @@ export default {
       if (!file.type.includes("image")) return;
       // If file is too big, return
       if (file.size > 1000000) return;
-      console.log(file);
+      // Get id
+      const id = "new-image/" + (Object.keys(this.local_images).length + 1);
+      // Create URL
+      this.local_images[id] = {
+        url: URL.createObjectURL(file),
+        file: file,
+      };
+      // Push to images with specific format
+      this.style.images.push(id);
+    },
+    cancelEdit(event) {
+      event.preventDefault();
+      // Remove editable state
+      this.$refs.styleName.contentEditable = false;
+      this.$refs.styleDomain.contentEditable = false;
+      this.$refs.styleDescription.contentEditable = false;
+      this.editable = false;
+      // Get old style version from local
+      this.style = this.store.actualOpenedStyle;
+      // Convert this.style.images from object to array keeping values
+      if (this.style.images) {
+        this.style.images = Object.values(this.style.images);
+      }
     },
   },
 };
@@ -398,6 +534,24 @@ input[type="file"] {
       justify-content: flex-end;
       column-gap: 20px;
       width: 100%;
+
+      .cancel-button {
+        cursor: pointer;
+        display: none;
+
+        svg {
+          fill: var(--color-secondary);
+        }
+      }
+
+      .save-button {
+        cursor: pointer;
+        transform: translateY(-2px);
+
+        svg {
+          fill: var(--color-secondary);
+        }
+      }
 
       .edit-button {
         display: grid;
@@ -459,6 +613,23 @@ input[type="file"] {
   .style-modal-images {
     position: relative;
     overflow: hidden;
+
+    .delete-image-zone {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      height: 80px;
+      width: 80px;
+      display: grid;
+      place-items: center;
+      background: var(--color-primary);
+      border-radius: var(--border-radius);
+
+      svg {
+        fill: var(--color-secondary);
+      }
+    }
 
     .style-modal-image-background {
       position: absolute;

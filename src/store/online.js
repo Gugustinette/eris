@@ -197,8 +197,35 @@ export const useOnline = defineStore("online-store", {
           body: JSON.stringify({
             name: style.name,
             domain: style.domain,
+            description: style.description,
             css: style.css,
           }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve(data);
+          });
+      });
+    },
+    editStyleImages(style, files) {
+      let formData = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files[]", files[i], files[i].name);
+      }
+      formData.append("imagesID", style.images);
+      console.log(formData);
+      console.log(style);
+      console.log(files);
+
+      return new Promise((resolve) => {
+        fetch(API_URL + "/style/images/" + style._id, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+            // Accept: "application/json",
+          },
+          body: formData,
         })
           .then((res) => res.json())
           .then((data) => {
