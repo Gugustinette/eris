@@ -34,6 +34,10 @@
   width: 100vw;
 }
 
+body {
+  background: var(--background);
+}
+
 nav {
   position: absolute;
   top: 37px;
