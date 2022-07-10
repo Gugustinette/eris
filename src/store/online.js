@@ -36,7 +36,7 @@ export const useOnline = defineStore("online-store", {
         });
       });
     },
-    // Get css from chrome extension storage
+    // Get styles from server
     getStyles() {
       return new Promise((resolve) => {
         fetch(API_URL + "/style/get")
@@ -67,7 +67,7 @@ export const useOnline = defineStore("online-store", {
         }
       });
     },
-    // Change state of specfiic style reactively
+    // Change state of specific style reactively
     changeStyleState(style, state) {
       // Find style in styles array
       const index = this.styles.findIndex((s) => s._id === style._id);
@@ -210,13 +210,23 @@ export const useOnline = defineStore("online-store", {
     editStyleImages(style, files) {
       let formData = new FormData();
 
+      // Add files
       for (let i = 0; i < files.length; i++) {
-        formData.append("files[]", files[i], files[i].name);
+        formData.append("files", files[i], files[i].name);
       }
-      formData.append("imagesID", style.images);
-      console.log(formData);
-      console.log(style);
-      console.log(files);
+
+      // Add images
+      if (style.images && style.images.length > 0) {
+        let imagesID = "[";
+        style.images.forEach((image) => {
+          imagesID += '"' + image + '",';
+        });
+        // Remove last ,
+        imagesID = imagesID.substring(0, imagesID.length - 1);
+        imagesID += "]";
+        // Add property
+        formData.append("imagesID", imagesID);
+      }
 
       return new Promise((resolve) => {
         fetch(API_URL + "/style/images/" + style._id, {

@@ -85,7 +85,9 @@ export class StyleController {
   @Patch('edit/:id')
   update(@Param('id') id: string, @Body() updateStyleDto: UpdateStyleDto) {
     // Remove HTML tags from the css
-    updateStyleDto.css = this.htmlUtil.purgeHtml(updateStyleDto.css);
+    if (updateStyleDto.css) {
+      updateStyleDto.css = this.htmlUtil.purgeHtml(updateStyleDto.css);
+    }
     return this.styleService.update(id, updateStyleDto);
   }
 
@@ -181,7 +183,9 @@ export class StyleController {
     } else {
       final_images = images;
     }
-    final_images.length = 3;
+    if (final_images.length > 3) {
+      final_images = final_images.slice(0, 3);
+    }
 
     // Return the images
     return this.styleService.setImages(id, final_images);

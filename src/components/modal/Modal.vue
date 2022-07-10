@@ -10,10 +10,19 @@
           class="field"
           v-for="field in fields"
           v-bind:key="field"
-          v-bind:id="'data-field-' + field"
+          v-bind:id="
+            'data-field-' +
+            (field.split('/')[0] === 'pwd' ? field.split('/')[1] : field)
+          "
         >
-          <label>{{ field }}</label>
-          <TextField v-bind:placeholder="field" />
+          <label>{{
+            field.split("/")[0] === "pwd" ? field.split("/")[1] : field
+          }}</label>
+          <PasswordField
+            v-if="field.split('/')[0] === 'pwd'"
+            v-bind:placeholder="field.split('/')[1]"
+          />
+          <TextField v-else v-bind:placeholder="field" />
         </div>
       </div>
       <div class="modal-footer">
@@ -37,6 +46,7 @@ import { defineComponent } from "vue";
 
 // Components
 import TextField from "@/components/form/TextField.vue";
+import PasswordField from "../form/PasswordField.vue";
 import Button from "@/components/form/Button.vue";
 
 export default defineComponent({
@@ -65,6 +75,7 @@ export default defineComponent({
   },
   components: {
     TextField,
+    PasswordField,
     Button,
   },
   methods: {
@@ -84,6 +95,9 @@ export default defineComponent({
       this.closeModalPanel();
       var fieldValues = {};
       this.fields.forEach((field) => {
+        if (field.split("/")[0] === "pwd") {
+          field = field.split("/")[1];
+        }
         var TextField = document.querySelector(`#data-field-${field}`)
           ?.children[1];
         if (TextField) {

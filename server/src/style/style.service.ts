@@ -61,7 +61,14 @@ export class StyleService {
 
   setImages(id: string, images: string[]) {
     return this.styleModel
-      .findOneAndUpdate({ _id: id }, { images }, { new: true })
+      .findOneAndUpdate(
+        { _id: id },
+        {
+          images,
+          updatedAt: new Date(),
+        },
+        { new: true },
+      )
       .exec();
   }
 }

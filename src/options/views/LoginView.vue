@@ -4,7 +4,7 @@
     v-on:close="online.showLogin = false"
     v-on:confirm="login"
     title="Login"
-    :fields="['Username', 'Password']"
+    :fields="['Username', 'pwd/Password']"
     confirmText="Login"
     cancelText="Cancel"
   />

@@ -30,7 +30,7 @@ export class AuthService {
         },
         {
           secret: jwtConstants.secret,
-          expiresIn: '1h',
+          expiresIn: '365d',
         },
       ),
       _id: userDb._id,

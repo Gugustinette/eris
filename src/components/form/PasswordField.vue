@@ -1,6 +1,6 @@
 <template>
   <input
-    type="text"
+    type="password"
     v-bind:name="name"
     v-bind:value="value"
     autocomplete="off"
@@ -14,7 +14,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "form-textfield",
+  name: "form-passwordfield",
   props: {
     name: String,
     type: {
