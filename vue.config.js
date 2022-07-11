@@ -19,15 +19,26 @@ module.exports = defineConfig({
     browserExtension: {
       componentOptions: {
         background: {
-          entry: "src/background.js",
+          entry: 'src/background.js'
         },
         contentScripts: {
           entries: {
-            "content-script": ["src/content-scripts/content-script.js"],
-          },
-        },
-      },
+            'content-script': [
+              'src/content-scripts/content-script.js'
+            ]
+          }
+        }
+      }
     },
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableLegacy: false,
+      runtimeOnly: false,
+      compositionOnly: false,
+      fullInstall: true
+    }
   },
 
   configureWebpack: {

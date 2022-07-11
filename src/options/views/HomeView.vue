@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1 class="header-title text-cant-be-selected">My styles</h1>
+      <h1 class="header-title text-cant-be-selected">
+        {{ t("HOME_VIEW.MY_STYLES") }}
+      </h1>
       <div class="actions" style="display: none">
         <button @click="store.purgeChromeStorage()">Purge</button>
       </div>
@@ -15,6 +17,7 @@
 
 <script>
 import { useStore } from "../../store";
+import { useI18n } from "vue-i18n";
 
 // Components
 import Style from "@/components/styles/Style.vue";
@@ -22,9 +25,14 @@ import Style from "@/components/styles/Style.vue";
 export default {
   setup() {
     const store = useStore();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
+      t,
     };
   },
   name: "HomeView",
