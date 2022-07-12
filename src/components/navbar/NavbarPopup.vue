@@ -5,15 +5,27 @@
       alt="Eris Logo"
       @click="this.openOptions"
     />
-    <RoutePopup to="/" content="My Styles" />
-    <RoutePopup to="/settings" content="Preferences" />
+    <RoutePopup to="/" :content="t('NAVBAR.MY_STYLES')" />
+    <RoutePopup to="/settings" :content="t('NAVBAR.PREFERENCES')" />
   </nav>
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
+
 import RoutePopup from "@/components/navbar/RoutePopup.vue";
 
 export default {
+  setup() {
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
+
+    return {
+      t,
+    };
+  },
   name: "popup-navbar",
   components: {
     RoutePopup,

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1 class="header-title text-cant-be-selected">Settings</h1>
+      <h1 class="header-title text-cant-be-selected">
+        {{ t("BASIC.SETTINGS") }}
+      </h1>
     </div>
     <div class="main-wrapper settings-main-wrapper">
       <LoginSection />
@@ -10,10 +12,22 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
+
 // Components
 import LoginSection from "@/components/settings/LoginSection";
 
 export default {
+  setup() {
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
+
+    return {
+      t,
+    };
+  },
   name: "SettingsView",
   components: {
     LoginSection,

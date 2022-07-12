@@ -3,9 +3,9 @@
     v-if="store.showImportStyle"
     v-on:close="store.showImportStyle = false"
     v-on:confirm="importStyle"
-    title="Import Style"
-    confirmText="Import"
-    cancelText="Cancel"
+    :title="t('STYLE.IMPORT_STYLE')"
+    :confirmText="t('ACTIONS.IMPORT')"
+    :cancelText="t('ACTIONS.CANCEL')"
   />
 </template>
 
@@ -14,6 +14,7 @@ import { defineComponent } from "vue";
 
 // Store
 import { useStore } from "../../store";
+import { useI18n } from "vue-i18n";
 
 // Components
 import ModalFilePanel from "@/components/modal/ModalFile.vue";
@@ -21,9 +22,14 @@ import ModalFilePanel from "@/components/modal/ModalFile.vue";
 export default defineComponent({
   setup() {
     const store = useStore();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
+      t,
     };
   },
   name: "CreateRoomView",

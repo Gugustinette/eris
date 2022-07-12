@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <h1 class="header-title text-cant-be-selected">Store</h1>
+      <h1 class="header-title text-cant-be-selected">{{ t("BASIC.STORE") }}</h1>
     </div>
     <div class="store-wrapper">
       <SearchBar @search="this.onSearch" />
@@ -20,6 +20,8 @@
 import { useStore } from "../../store";
 import { useOnline } from "../../store/online";
 
+import { useI18n } from "vue-i18n";
+
 // Components
 import StyleStore from "@/components/styles/StyleStore";
 import SearchBar from "@/components/store/SearchBar.vue";
@@ -28,10 +30,15 @@ export default {
   setup() {
     const store = useStore();
     const online = useOnline();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
       online,
+      t,
     };
   },
   name: "StoreView",

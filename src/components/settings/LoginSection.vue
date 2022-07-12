@@ -8,15 +8,15 @@
         </div>
         <div class="profil-name">{{ online.user.username }}</div>
       </div>
-      <Button content="Logout" @click="online.logout()" />
+      <Button :content="t('AUTH.DISCONNECT')" @click="online.logout()" />
     </div>
     <div class="settings-section-content" v-else>
       <div class="profil-header">
-        <div class="profil-name">You're not connected</div>
+        <div class="profil-name">{{ t("AUTH.NOT_CONNECTED") }}</div>
       </div>
-      <Button content="Login" @click="online.showLogin = true" />
+      <Button :content="t('AUTH.LOGIN')" @click="online.showLogin = true" />
       <Button
-        content="Sign Up"
+        :content="t('AUTH.SIGNUP')"
         :noBackground="true"
         @click="online.showSignUp = true"
       />
@@ -29,6 +29,7 @@
 <script>
 import { useStore } from "../../store";
 import { useOnline } from "../../store/online";
+import { useI18n } from "vue-i18n";
 
 // Components
 import Button from "@/components/form/Button.vue";
@@ -39,10 +40,15 @@ export default {
   setup() {
     const store = useStore();
     const online = useOnline();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
       online,
+      t,
     };
   },
   name: "LoginSection",

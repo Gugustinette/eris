@@ -1,5 +1,57 @@
 {
+  "ID": "ID",
+  "BASIC": {
+    "NAME": "Name",
+    "DOMAIN": "Domain",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "PWD/PASSWORD": "pwd/Password",
+    "SETTINGS": "Settings",
+    "STORE": "Store",
+    "AUTHOR": "Author",
+    "CREATED_AT": "Created at",
+    "LAST_UPDATE": "Last update",
+    "CREATE_STYLE": "Create Style"
+  },
   "HOME_VIEW": {
     "MY_STYLES": "My styles"
+  },
+  "NAVBAR": {
+    "MY_STYLES":"My styles",
+    "PREFERENCES": "Preferences"
+  },
+  "EDITOR": {
+    "EDITOR": "Editor",
+    "CSS_FILE": "CSS file",
+    "PACKAGE": "Package",
+    "EXPORT_CSS": "Export CSS File",
+    "EXPORT_PACKAGE": "Export Package"
+  },
+  "STYLE": {
+    "STATE_INSTALLED": "Installed",
+    "STATE_NOT_INSTALLED": "Not installed",
+    "STATE_INSTALLING": "Installing",
+    "STATE_UPDATE": "Update",
+    "STATE_NOT_PUBLISHED": "Not published",
+    "IMPORT_STYLE": "Import Style"
+  },
+  "ACTIONS": {
+    "INSTALL": "Install",
+    "UNINSTALL": "Uninstall",
+    "UPDATE": "Update",
+    "SAVE": "Save",
+    "PUBLISH": "Publish",
+    "DETAILS": "Details",
+    "DELETE": "Delete",
+    "RENAME": "Rename",
+    "CREATE": "Create",
+    "CANCEL": "Cancel",
+    "IMPORT": "Import"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "SIGNUP": "Register",
+    "DISCONNECT": "Logout",
+    "NOT_CONNECTED": "You're not connected"
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="context-menu">
-    <div class="action" @click="openDetails">Details</div>
-    <div class="action" @click="renameStyle">Rename</div>
+    <div class="action" @click="openDetails">{{ t("ACTIONS.DETAILS") }}</div>
+    <div class="action" @click="renameStyle">{{ t("ACTIONS.RENAME") }}</div>
     <div class="separator"></div>
-    <div class="action red" @click="deleteStyle">Delete</div>
+    <div class="action red" @click="deleteStyle">{{ t("ACTIONS.DELETE") }}</div>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import { defineComponent } from "vue";
 
 // Store
 import { useStore } from "../../store";
+import { useI18n } from "vue-i18n";
 
 // Components
 import ContextMenu from "@/components/context-menu/ContextMenu.vue";
@@ -19,9 +20,14 @@ import ContextMenu from "@/components/context-menu/ContextMenu.vue";
 export default defineComponent({
   setup() {
     const store = useStore();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
+      t,
     };
   },
   name: "ContextStyleEditor",

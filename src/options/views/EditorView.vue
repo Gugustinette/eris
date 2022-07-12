@@ -1,7 +1,9 @@
 <template>
   <div class="editor">
     <div class="editor-header">
-      <h1 class="editor-header-title text-cant-be-selected">Editor</h1>
+      <h1 class="editor-header-title text-cant-be-selected">
+        {{ t("EDITOR.EDITOR") }}
+      </h1>
       <div class="editor-style-list">
         <div class="editor-style-list-container">
           <StyleEditor
@@ -39,6 +41,7 @@
 
 <script>
 import { useStore } from "../../store";
+import { useI18n } from "vue-i18n";
 
 // Components
 import StyleEditor from "../../components/styles/StyleEditor.vue";
@@ -46,9 +49,14 @@ import StyleEditor from "../../components/styles/StyleEditor.vue";
 export default {
   setup() {
     const store = useStore();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       store,
+      t,
     };
   },
   name: "EditorView",

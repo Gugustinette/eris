@@ -2,11 +2,11 @@
   <ModalPanel
     v-if="online.showSignUp"
     v-on:close="online.showSignUp = false"
-    v-on:confirm="login"
-    title="Sign Up"
-    :fields="['Username', 'Password']"
-    confirmText="Sign Up"
-    cancelText="Cancel"
+    v-on:confirm="signup"
+    :title="t('AUTH.SIGNUP')"
+    :fields="[t('BASIC.USERNAME'), t('BASIC.PWD/PASSWORD')]"
+    :confirmText="t('AUTH.SIGNUP')"
+    :cancelText="t('ACTIONS.CANCEL')"
   />
 </template>
 
@@ -16,15 +16,22 @@ import { defineComponent } from "vue";
 // online
 import { useOnline } from "../../store/online";
 
+import { useI18n } from "vue-i18n";
+
 // Components
 import ModalPanel from "@/components/modal/Modal.vue";
 
 export default defineComponent({
   setup() {
     const online = useOnline();
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
 
     return {
       online,
+      t,
     };
   },
   name: "SignUpView",
@@ -32,7 +39,7 @@ export default defineComponent({
     ModalPanel,
   },
   methods: {
-    login(fieldValues) {
+    signup(fieldValues) {
       this.online.signup(fieldValues.Username, fieldValues.Password);
     },
   },

@@ -1,5 +1,57 @@
 {
-    "HOME_VIEW": {
-      "MY_STYLES": "Mes styles"
-    }
+  "ID": "ID",
+  "BASIC": {
+    "NAME": "Nom",
+    "DOMAIN": "Domaine",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "PWD/PASSWORD": "pwd/Mot de passe",
+    "SETTINGS": "Réglages",
+    "STORE": "Marché",
+    "AUTHOR": "Auteur",
+    "CREATED_AT": "Créé le",
+    "LAST_UPDATE": "Dernière mise à jour",
+    "CREATE_STYLE": "Créer un style"
+  },
+  "HOME_VIEW": {
+    "MY_STYLES": "Mes styles"
+  },
+  "NAVBAR": {
+    "MY_STYLES":"Mes styles",
+    "PREFERENCES": "Préférences"
+  },
+  "EDITOR": {
+    "EDITOR": "Editeur",
+    "CSS_FILE": "Fichier CSS",
+    "PACKAGE": "Package",
+    "EXPORT_CSS": "Exporter Fichier CSS",
+    "EXPORT_PACKAGE": "Exporter Package"
+  },
+  "STYLE": {
+    "STATE_INSTALLED": "Installé",
+    "STATE_NOT_INSTALLED": "Non installé",
+    "STATE_INSTALLING": "En installation",
+    "STATE_UPDATE": "Mise à jour",
+    "STATE_NOT_PUBLISHED": "Non publié",
+    "IMPORT_STYLE": "Importer un style"
+  },
+  "ACTIONS": {
+    "INSTALL": "Installer",
+    "UNINSTALL": "Désinstaller",
+    "UPDATE": "Mettre à jour",
+    "SAVE": "Sauvegarder",
+    "PUBLISH": "Publier",
+    "DETAILS": "Détails",
+    "DELETE": "Supprimer",
+    "RENAME": "Renommer",
+    "CREATE": "Créer",
+    "CANCEL": "Annuler",
+    "IMPORT": "Importer"
+  },
+  "AUTH": {
+    "LOGIN": "Se connecter",
+    "SIGNUP": "S'inscrire",
+    "DISCONNECT": "Se Déconnecter",
+    "NOT_CONNECTED": "Vous n'êtes pas connecté"
   }
+}

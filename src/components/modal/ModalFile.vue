@@ -30,7 +30,7 @@
               d="M9 15.2881C9 14.7358 9.44772 14.2881 10 14.2881H14C14.5523 14.2881 15 14.7358 15 15.2881C15 15.8404 14.5523 16.2881 14 16.2881H10C9.44772 16.2881 9 15.8404 9 15.2881Z"
             />
           </svg>
-          <h2>CSS File</h2>
+          <h2>{{ t("EDITOR.CSS_FILE") }}</h2>
         </label>
         <label class="file-input">
           <input type="file" @change="handlePackage" />
@@ -56,7 +56,7 @@
               d="M8.5 13.2881C8.5 12.7358 8.94772 12.2881 9.5 12.2881H14.5C15.0523 12.2881 15.5 12.7358 15.5 13.2881C15.5 13.8404 15.0523 14.2881 14.5 14.2881H9.5C8.94772 14.2881 8.5 13.8404 8.5 13.2881Z"
             />
           </svg>
-          <h2>Package</h2>
+          <h2>{{ t("EDITOR.PACKAGE") }}</h2>
         </label>
       </div>
       <div class="fields" v-if="fields">
@@ -88,12 +88,23 @@
 
 <script>
 import { defineComponent } from "vue";
+import { useI18n } from "vue-i18n";
 
 // Components
 import TextField from "@/components/form/TextField.vue";
 import Button from "@/components/form/Button.vue";
 
 export default defineComponent({
+  setup() {
+    const { t } = useI18n({
+      inheritLocale: true,
+      useScope: "local",
+    });
+
+    return {
+      t,
+    };
+  },
   name: "option-modal-panel",
   props: {
     isVisible: {
