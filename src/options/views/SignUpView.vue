@@ -24,10 +24,7 @@ import ModalPanel from "@/components/modal/Modal.vue";
 export default defineComponent({
   setup() {
     const online = useOnline();
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       online,

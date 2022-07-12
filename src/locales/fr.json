@@ -11,7 +11,8 @@
     "AUTHOR": "Auteur",
     "CREATED_AT": "Créé le",
     "LAST_UPDATE": "Dernière mise à jour",
-    "CREATE_STYLE": "Créer un style"
+    "CREATE_STYLE": "Créer un style",
+    "LANGUAGE": "Langue"
   },
   "HOME_VIEW": {
     "MY_STYLES": "Mes styles"

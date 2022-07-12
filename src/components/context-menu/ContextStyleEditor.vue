@@ -20,10 +20,7 @@ import ContextMenu from "@/components/context-menu/ContextMenu.vue";
 export default defineComponent({
   setup() {
     const store = useStore();
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       store,

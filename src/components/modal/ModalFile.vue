@@ -96,10 +96,7 @@ import Button from "@/components/form/Button.vue";
 
 export default defineComponent({
   setup() {
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       t,

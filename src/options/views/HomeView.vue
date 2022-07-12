@@ -25,10 +25,7 @@ import Style from "@/components/styles/Style.vue";
 export default {
   setup() {
     const store = useStore();
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       store,

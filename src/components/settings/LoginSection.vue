@@ -40,10 +40,7 @@ export default {
   setup() {
     const store = useStore();
     const online = useOnline();
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       store,

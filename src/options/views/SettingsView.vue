@@ -7,6 +7,7 @@
     </div>
     <div class="main-wrapper settings-main-wrapper">
       <LoginSection />
+      <LangSection />
     </div>
   </div>
 </template>
@@ -16,13 +17,11 @@ import { useI18n } from "vue-i18n";
 
 // Components
 import LoginSection from "@/components/settings/LoginSection";
+import LangSection from "@/components/settings/LangSection";
 
 export default {
   setup() {
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       t,
@@ -31,6 +30,7 @@ export default {
   name: "SettingsView",
   components: {
     LoginSection,
+    LangSection,
   },
 };
 </script>

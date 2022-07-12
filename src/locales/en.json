@@ -11,7 +11,8 @@
     "AUTHOR": "Author",
     "CREATED_AT": "Created at",
     "LAST_UPDATE": "Last update",
-    "CREATE_STYLE": "Create Style"
+    "CREATE_STYLE": "Create Style",
+    "LANGUAGE": "Language"
   },
   "HOME_VIEW": {
     "MY_STYLES": "My styles"

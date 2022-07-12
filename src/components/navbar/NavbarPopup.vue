@@ -17,10 +17,7 @@ import RoutePopup from "@/components/navbar/RoutePopup.vue";
 
 export default {
   setup() {
-    const { t } = useI18n({
-      inheritLocale: true,
-      useScope: "local",
-    });
+    const { t } = useI18n();
 
     return {
       t,
