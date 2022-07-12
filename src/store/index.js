@@ -8,6 +8,7 @@ export const useStore = defineStore("main-store", {
     showImportStyle: false,
     editorContextMenu: "",
     actualOpenedStyle: undefined,
+    lang: "en",
   }),
   actions: {
     // Get css from chrome extension storage
@@ -112,6 +113,20 @@ export const useStore = defineStore("main-store", {
 
       // If style is not up to date, return false
       return false;
+    },
+    changeLanguage(lang) {
+      this.lang = lang;
+      // Save lang to chrome storage
+      chrome.storage.sync.set({ lang: this.lang });
+    },
+    initLanguage() {
+      chrome.storage.sync.get("lang", (result) => {
+        if (result.lang) {
+          this.lang = result.lang;
+        } else {
+          this.lang = "en";
+        }
+      });
     },
   },
 });

@@ -36,6 +36,7 @@ export default {
   },
   mounted() {
     this.online.loadUser();
+    this.store.initLanguage();
   },
 };
 </script>
