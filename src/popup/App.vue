@@ -29,6 +29,10 @@ export default {
   --color-surface: #1f1f1f;
   --color-background: #040404;
   --color-action: #ba674f;
+  --font: #fff;
+  --font-on-secondary: #000;
+
+  --black-off: rgba(0, 0, 0, 0.3);
 
   --navbar-background: conic-gradient(
     from 156.31deg at 50% 49.38%,
@@ -47,6 +51,15 @@ export default {
 
   --modal-background: rgba(0, 0, 0, 0.7);
   --modal-backdrop-filter: blur(2px);
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius: 14px;
+
+  --font-size-small: 0.8rem;
+  --font-size-medium: 1rem;
+  --font-size-large: 1.2rem;
+  --font-size-title: 1.8rem;
 }
 * {
   margin: 0;
