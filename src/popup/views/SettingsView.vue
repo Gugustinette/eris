@@ -5,6 +5,7 @@
     </div>
     <div class="main-wrapper settings-main-wrapper">
       <LoginSection />
+      <LangSection />
     </div>
   </div>
 </template>
@@ -12,11 +13,13 @@
 <script>
 // Components
 import LoginSection from "@/components/settings/LoginSection";
+import LangSection from "@/components/settings/LangSection";
 
 export default {
   name: "SettingsView",
   components: {
     LoginSection,
+    LangSection,
   },
 };
 </script>
@@ -25,7 +28,7 @@ export default {
 .settings-main-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-content: center;
 
   .settings-section {
     max-width: 1000px;

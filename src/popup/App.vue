@@ -6,12 +6,33 @@
 </template>
 
 <script>
+import { useStore } from "@/store";
+import { useOnline } from "@/store/online";
+import { useI18n } from "vue-i18n";
+
 import NavbarPopup from "@/components/navbar/NavbarPopup.vue";
 
 export default {
+  setup() {
+    const store = useStore();
+    const online = useOnline();
+    const { locale } = useI18n();
+
+    return {
+      store,
+      online,
+      locale,
+    };
+  },
   name: "App",
   components: {
     NavbarPopup,
+  },
+  mounted() {
+    this.online.loadUser();
+    this.store.initLanguage().then(() => {
+      this.locale = this.store.lang;
+    });
   },
 };
 </script>
