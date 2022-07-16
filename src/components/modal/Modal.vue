@@ -11,8 +11,9 @@
           v-for="field in fields"
           v-bind:key="field"
           v-bind:id="
-            'data-field-' +
-            (field.split('/')[0] === 'pwd' ? field.split('/')[1] : field)
+            this.getValidSelector(
+              field.split('/')[0] === 'pwd' ? field.split('/')[1] : field
+            )
           "
         >
           <label>{{
@@ -98,20 +99,31 @@ export default defineComponent({
         if (field.split("/")[0] === "pwd") {
           field = field.split("/")[1];
         }
-        var TextField = document.querySelector(`#data-field-${field}`)
-          ?.children[1];
+        var TextField = document.querySelector(
+          `#${this.getValidSelector(field)}`
+        )?.children[1];
         if (TextField) {
           fieldValues[field] = TextField.value;
         }
       });
       this.$emit("confirm", fieldValues);
     },
+    getValidSelector(field) {
+      // Remove capital letters from field name
+      field = field.replace(/[A-Z]/g, (letter) => {
+        return "-" + letter.toLowerCase();
+      });
+      // Remove special characters from field name
+      field = field.replace(/[^a-zA-Z0-9]/g, "");
+      return `data-field-${field}`;
+    },
   },
   mounted() {
     // Turn on focus on the first field
     if (this.fields && this.fields.length > 0) {
-      const firstField = document.querySelector(`#data-field-${this.fields[0]}`)
-        ?.children[1];
+      const firstField = document.querySelector(
+        `#${this.getValidSelector(this.fields[0])}`
+      )?.children[1];
       if (firstField) {
         firstField.focus();
       }

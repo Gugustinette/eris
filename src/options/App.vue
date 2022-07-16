@@ -11,6 +11,7 @@
 <script>
 import { useStore } from "@/store";
 import { useOnline } from "@/store/online";
+import { useI18n } from "vue-i18n";
 
 import Navbar from "@/components/navbar/Navbar.vue";
 import AddStyle from "@/options/views/AddStyleView.vue";
@@ -21,10 +22,12 @@ export default {
   setup() {
     const store = useStore();
     const online = useOnline();
+    const { locale } = useI18n();
 
     return {
       store,
       online,
+      locale,
     };
   },
   name: "App",
@@ -36,7 +39,9 @@ export default {
   },
   mounted() {
     this.online.loadUser();
-    this.store.initLanguage();
+    this.store.initLanguage().then(() => {
+      this.locale = this.store.lang;
+    });
   },
 };
 </script>

@@ -120,12 +120,15 @@ export const useStore = defineStore("main-store", {
       chrome.storage.sync.set({ lang: this.lang });
     },
     initLanguage() {
-      chrome.storage.sync.get("lang", (result) => {
-        if (result.lang) {
-          this.lang = result.lang;
-        } else {
-          this.lang = "en";
-        }
+      return new Promise((resolve) => {
+        chrome.storage.sync.get("lang", (result) => {
+          if (result.lang) {
+            this.lang = result.lang;
+          } else {
+            this.lang = "en";
+          }
+          resolve(this.lang);
+        });
       });
     },
   },
