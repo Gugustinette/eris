@@ -30,18 +30,14 @@ export default defineComponent({
 
 <style scoped lang="scss">
 input {
-  width: 250px;
+  width: 100%;
   height: 40px;
-  border: 1px solid var(--color-primary);
   border-radius: 4px;
   padding: 0 10px;
   font-size: 1rem;
   color: #000;
   outline: none;
+  border: none;
   transition: all 0.3s ease;
-
-  &:focus {
-    width: 300px;
-  }
 }
 </style>

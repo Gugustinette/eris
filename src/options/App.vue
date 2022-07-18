@@ -59,6 +59,8 @@ export default {
   --color-surface: #1f1f1f;
   --color-background: #040404;
   --color-action: #ba674f;
+  --color-error: #c0392b;
+  --color-transparent: rgba(0, 0, 0, 0);
   --font: #fff;
   --font-on-secondary: #000;
 

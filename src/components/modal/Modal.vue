@@ -145,7 +145,8 @@ export default defineComponent({
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 40px;
-    min-width: 350px;
+    width: 490px;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
