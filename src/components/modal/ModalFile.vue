@@ -164,7 +164,7 @@ export default defineComponent({
     },
     handleCssFile(event) {
       const file = event.target.files[0];
-      this.fields = ["Name", "Domain"];
+      this.fields = [this.t("BASIC.NAME"), this.t("BASIC.DOMAIN")];
       this.file = file;
     },
     handlePackage(event) {

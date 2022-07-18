@@ -43,8 +43,8 @@ export default defineComponent({
           const content = e.target.result;
           // Create a new style
           const style = {
-            name: fields.Name,
-            domain: fields.Domain,
+            name: fields[this.t("BASIC.NAME")],
+            domain: fields[this.t("BASIC.DOMAIN")],
             css: content,
           };
           // Add the style to the store

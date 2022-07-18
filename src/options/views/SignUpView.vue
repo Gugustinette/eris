@@ -4,7 +4,10 @@
     v-on:close="online.showSignUp = false"
     v-on:confirm="signup"
     :title="t('AUTH.SIGNUP')"
-    :fields="[t('BASIC.USERNAME'), t('BASIC.PWD/PASSWORD')]"
+    :fields="[
+      { title: this.t('BASIC.USERNAME'), type: 'textfield' },
+      { title: this.t('BASIC.PASSWORD'), type: 'password' },
+    ]"
     :confirmText="t('AUTH.SIGNUP')"
     :cancelText="t('ACTIONS.CANCEL')"
   />
@@ -37,7 +40,10 @@ export default defineComponent({
   },
   methods: {
     signup(fieldValues) {
-      this.online.signup(fieldValues.Username, fieldValues.Password);
+      this.online.signup(
+        fieldValues[this.t("BASIC.USERNAME")],
+        fieldValues[this.t("BASIC.PASSWORD")]
+      );
     },
   },
 });

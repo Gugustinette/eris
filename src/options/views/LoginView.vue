@@ -4,7 +4,10 @@
     v-on:close="online.showLogin = false"
     v-on:confirm="login"
     :title="t('AUTH.LOGIN')"
-    :fields="[t('BASIC.USERNAME'), t('BASIC.PWD/PASSWORD')]"
+    :fields="[
+      { title: this.t('BASIC.USERNAME'), type: 'textfield' },
+      { title: this.t('BASIC.PASSWORD'), type: 'password' },
+    ]"
     :confirmText="t('AUTH.LOGIN')"
     :cancelText="t('ACTIONS.CANCEL')"
   />
@@ -37,7 +40,10 @@ export default defineComponent({
   },
   methods: {
     login(fieldValues) {
-      this.online.login(fieldValues.Username, fieldValues.Password);
+      this.online.login(
+        fieldValues[this.t("BASIC.USERNAME")],
+        fieldValues[this.t("BASIC.PASSWORD")]
+      );
     },
   },
 });

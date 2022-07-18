@@ -10,20 +10,14 @@
           class="field"
           v-for="field in fields"
           v-bind:key="field"
-          v-bind:id="
-            this.getValidSelector(
-              field.split('/')[0] === 'pwd' ? field.split('/')[1] : field
-            )
-          "
+          :id="this.getValidSelector(field.title)"
         >
-          <label>{{
-            field.split("/")[0] === "pwd" ? field.split("/")[1] : field
-          }}</label>
+          <label>{{ field.title }}</label>
           <PasswordField
-            v-if="field.split('/')[0] === 'pwd'"
-            v-bind:placeholder="field.split('/')[1]"
+            v-if="field.type === 'password'"
+            :placeholder="field.title"
           />
-          <TextField v-else v-bind:placeholder="field" />
+          <TextField v-else :placeholder="field.title" />
         </div>
       </div>
       <div class="modal-footer">
@@ -96,14 +90,11 @@ export default defineComponent({
       this.closeModalPanel();
       var fieldValues = {};
       this.fields.forEach((field) => {
-        if (field.split("/")[0] === "pwd") {
-          field = field.split("/")[1];
-        }
         var TextField = document.querySelector(
-          `#${this.getValidSelector(field)}`
+          `#${this.getValidSelector(field.title)}`
         )?.children[1];
         if (TextField) {
-          fieldValues[field] = TextField.value;
+          fieldValues[field.title] = TextField.value;
         }
       });
       this.$emit("confirm", fieldValues);
@@ -122,7 +113,7 @@ export default defineComponent({
     // Turn on focus on the first field
     if (this.fields && this.fields.length > 0) {
       const firstField = document.querySelector(
-        `#${this.getValidSelector(this.fields[0])}`
+        `#${this.getValidSelector(this.fields[0].title)}`
       )?.children[1];
       if (firstField) {
         firstField.focus();
@@ -187,6 +178,7 @@ export default defineComponent({
         label {
           align-self: flex-start;
           margin-bottom: 5px;
+          font-size: 1.1rem;
         }
       }
     }

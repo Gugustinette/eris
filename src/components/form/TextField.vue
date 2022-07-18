@@ -35,7 +35,7 @@ input {
   border: 1px solid var(--color-primary);
   border-radius: 4px;
   padding: 0 10px;
-  font-size: 16px;
+  font-size: 1rem;
   color: #000;
   outline: none;
   transition: all 0.3s ease;

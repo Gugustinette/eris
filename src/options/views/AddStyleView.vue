@@ -4,7 +4,10 @@
     v-on:close="store.showAddStyle = false"
     v-on:confirm="createStyle"
     :title="t('BASIC.CREATE_STYLE')"
-    :fields="[t('BASIC.NAME'), t('BASIC.DOMAIN')]"
+    :fields="[
+      { title: this.t('BASIC.NAME'), type: 'textfield' },
+      { title: this.t('BASIC.DOMAIN'), type: 'textfield' },
+    ]"
     :confirmText="t('ACTIONS.CREATE')"
     :cancelText="t('ACTIONS.CANCEL')"
   />
@@ -37,8 +40,8 @@ export default defineComponent({
   methods: {
     createStyle(fieldValues) {
       this.store.addStyle({
-        name: fieldValues.Name,
-        domain: fieldValues.Domain,
+        name: fieldValues[this.t("BASIC.NAME")],
+        domain: fieldValues[this.t("BASIC.DOMAIN")],
         css: "* {\ncolor: red !important;\n}",
       });
     },
