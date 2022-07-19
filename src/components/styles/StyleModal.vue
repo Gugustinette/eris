@@ -378,7 +378,6 @@ export default {
             filesToSend
           )
           .then((data) => {
-            console.log(data);
             this.style.images = data.images;
             this.store.editStyle(this.style);
           });

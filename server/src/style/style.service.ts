@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { IStyle } from './interfaces/style.interface';
 import { CreateStyleDto } from './dto/create-style.dto';
 import { UpdateStyleDto } from './dto/update-style.dto';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { IUser } from 'src/users/interfaces/user.interface';
 
 @Injectable()
@@ -31,12 +31,21 @@ export class StyleService {
   }
 
   search(query: string) {
+    // Create object id from query
+    const queryId = query.split(' ').map((word) => {
+      if (word.length === 24) {
+        return new Types.ObjectId(word);
+      } else {
+        return undefined;
+      }
+    });
     // Find in name or description or _id
     return this.styleModel
       .find({
         $or: [
           { name: { $regex: query, $options: 'i' } },
           { description: { $regex: query, $options: 'i' } },
+          { _id: { $in: queryId } },
         ],
       })
       .limit(20)

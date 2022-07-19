@@ -49,7 +49,11 @@ export default {
   },
   methods: {
     onSearch(value) {
-      this.online.searchStyles(value);
+      if (!value || value.length < 2) {
+        this.online.getStyles();
+      } else {
+        this.online.searchStyles(value);
+      }
     },
   },
 };

@@ -4,7 +4,7 @@
       type="text"
       name="Search Bar"
       autocomplete="off"
-      placeholder="ex. Facebook, Amazon, ..."
+      placeholder="Enter a term or ID"
       @input="this.onInput"
       class="text-can-be-selected"
     />
