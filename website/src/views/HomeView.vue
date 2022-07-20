@@ -24,6 +24,7 @@
         >Download for Google Chrome</a
       >
     </div>
+    <a class="policy-button" href="/policy">Policy</a>
   </div>
 </template>
 
@@ -46,6 +47,7 @@ export default {
   max-width: 1920px;
   display: grid;
   place-items: center;
+  overflow: hidden;
 
   .bg-image-1 {
     position: absolute;
@@ -68,6 +70,7 @@ export default {
     align-items: center;
     row-gap: 25px;
     z-index: 2;
+    height: 100vh;
 
     h1 {
       font-size: 62px;
@@ -79,6 +82,14 @@ export default {
       margin: 0px 80px;
       text-align: center;
     }
+  }
+
+  .policy-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 2;
+    margin: 0px 20px;
   }
 }
 </style>

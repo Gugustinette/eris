@@ -4,27 +4,36 @@
       <ErisLogo />
     </nav>
     <div class="content">
-      <h2>Policy</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem porro ad
-        consequuntur ullam excepturi quod tempore ab sit optio? Maiores
-        exercitationem natus cumque facilis fugiat, laborum, nam asperiores
-        provident voluptatum corporis expedita commodi voluptatem qui magni
-        consequatur dolorem, aut perferendis rem delectus eos alias perspiciatis
-        similique. Minus quaerat tenetur vel adipisci, architecto dignissimos
-        assumenda.
-      </p>
+      <vue-markdown :source="src" />
     </div>
   </div>
 </template>
 
 <script>
+// Markdown
+import VueMarkdown from "vue-markdown-render";
+
 import ErisLogo from "@/components/ErisLogo.vue";
 
 export default {
   name: "PolicyView",
   components: {
     ErisLogo,
+    VueMarkdown,
+  },
+  data() {
+    return {
+      src: "",
+    };
+  },
+  mounted() {
+    // Fetch the policy
+    fetch("/policy/policy.md")
+      .then((res) => res.text())
+      .then((text) => {
+        console.log(text);
+        this.src = text;
+      });
   },
 };
 </script>
@@ -39,6 +48,7 @@ export default {
   place-items: center;
 
   .content {
+    margin-top: 200px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -46,9 +56,29 @@ export default {
     row-gap: 25px;
     z-index: 2;
 
+    h1 {
+      margin: 10px 20px;
+    }
+
     p {
-      margin: 0px 80px;
-      text-align: center;
+      margin: 20px 30px;
+    }
+
+    ol {
+      li {
+        margin: 10px 80px;
+      }
+    }
+
+    ul {
+      li {
+        margin: 10px 80px;
+      }
+    }
+
+    strong {
+      font-weight: bold;
+      text-decoration: underline;
     }
   }
 }
