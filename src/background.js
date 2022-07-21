@@ -8,6 +8,7 @@ async function getCurrentTab() {
   return tab;
 }
 
+// Injected function
 function loadWebsiteStyle() {
   // Access chrome extension storage
   chrome.storage.sync.get("cssStyles", (result) => {
@@ -66,6 +67,7 @@ function loadWebsiteStyle() {
   });
 }
 
+// Main function
 async function applyStyle(tab, tabId) {
   // If the url starts with "https://" or "http://"
   if (tab.url.startsWith("https://" || "http://")) {
