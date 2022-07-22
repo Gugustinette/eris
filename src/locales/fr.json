@@ -16,6 +16,9 @@
   "HOME_VIEW": {
     "MY_STYLES": "Mes styles"
   },
+  "STORE": {
+    "SEARCH_BAR": "Entrez un terme ou identifiant"
+  },
   "NAVBAR": {
     "MY_STYLES":"Mes styles",
     "PREFERENCES": "Préférences"

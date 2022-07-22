@@ -4,7 +4,7 @@
       type="text"
       name="Search Bar"
       autocomplete="off"
-      placeholder="Enter a term or ID"
+      :placeholder="t('STORE.SEARCH_BAR')"
       @input="this.onInput"
       class="text-can-be-selected"
     />
@@ -25,7 +25,15 @@
 <script>
 import { defineComponent } from "vue";
 
+import { useI18n } from "vue-i18n";
+
 export default defineComponent({
+  setup() {
+    const { t } = useI18n();
+    return {
+      t,
+    };
+  },
   name: "search-bar",
   methods: {
     onInput(event) {
