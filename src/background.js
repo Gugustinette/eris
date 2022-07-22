@@ -40,6 +40,10 @@ function loadWebsiteStyle() {
             );
             // Tag doesn't exist or style is different
             if (!styleTag || styleTag.innerHTML !== style.css) {
+              // If tag exists, remove it
+              if (styleTag) {
+                styleTag.remove();
+              }
               // Inject style
               let styleElement = document.createElement("style");
               styleElement.setAttribute("id", "eris-style-tag-" + style._id);
