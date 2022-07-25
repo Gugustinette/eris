@@ -76,7 +76,7 @@ export const useOnline = defineStore("online-store", {
     },
     // Login
     login(username, password) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         fetch(API_URL + "/auth/login", {
           method: "POST",
           headers: {
@@ -89,18 +89,22 @@ export const useOnline = defineStore("online-store", {
         })
           .then((res) => res.json())
           .then((data) => {
-            const bearerToken = data.access_token;
-            const user = {
-              _id: data._id,
-              username: username,
-            };
-            this.bearerToken = bearerToken;
-            this.user = user;
-            chrome.storage.sync.set({
-              bearerToken: bearerToken,
-              user: user,
-            });
-            resolve(data);
+            if (data._id) {
+              const bearerToken = data.access_token;
+              const user = {
+                _id: data._id,
+                username: username,
+              };
+              this.bearerToken = bearerToken;
+              this.user = user;
+              chrome.storage.sync.set({
+                bearerToken: bearerToken,
+                user: user,
+              });
+              resolve(data);
+            } else {
+              reject(data);
+            }
           });
       });
     },
@@ -254,6 +258,16 @@ export const useOnline = defineStore("online-store", {
         })
           .then((res) => res.json())
           .then((data) => {
+            // Remove style from styles if it is in it
+            const index = this.styles.findIndex((s) => s._id === style._id);
+            if (index !== -1) {
+              this.styles.splice(index, 1);
+            }
+            // If style is in base store, remove it
+            const baseStore = useStore();
+            if (baseStore.styles.find((s) => s._id === style._id)) {
+              baseStore.deleteStyle(style);
+            }
             resolve(data);
           });
       });
