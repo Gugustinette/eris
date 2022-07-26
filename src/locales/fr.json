@@ -54,7 +54,10 @@
   "AUTH": {
     "LOGIN": "Se connecter",
     "SIGNUP": "S'inscrire",
-    "DISCONNECT": "Se Déconnecter",
-    "NOT_CONNECTED": "Vous n'êtes pas connecté"
+    "DISCONNECT": "Se déconnecter",
+    "NOT_CONNECTED": "Vous n'êtes pas connecté",
+    "DELETE_ACCOUNT": "Se désinscrire",
+    "DELETE_ACCOUNT_CONFIRM": "Êtes vous sûr de vouloir vous désinscrire ?",
+    "INVALID_CREDENTIALS": "Nom d'utilisateur ou mot de passe incorrect"
   }
 }

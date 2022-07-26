@@ -148,6 +148,23 @@ export const useOnline = defineStore("online-store", {
         resolve();
       });
     },
+    // Delete account
+    deleteAccount() {
+      return new Promise(() => {
+        fetch(API_URL + "/user/delete/" + this.user._id, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + this.bearerToken,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data._id) {
+              return this.logout();
+            }
+          });
+      });
+    },
     downloadStyle(style) {
       // Change style state in styles
       this.changeStyleState(style, "downloading");

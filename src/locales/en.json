@@ -55,6 +55,9 @@
     "LOGIN": "Login",
     "SIGNUP": "Register",
     "DISCONNECT": "Logout",
-    "NOT_CONNECTED": "You're not connected"
+    "NOT_CONNECTED": "You're not connected",
+    "DELETE_ACCOUNT": "Delete account",
+    "DELETE_ACCOUNT_CONFIRM": "Are you sure you want to delete your account ?",
+    "INVALID_CREDENTIALS": "Invalid username or password"
   }
 }

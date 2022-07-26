@@ -58,6 +58,7 @@ export default {
       display: flex;
       flex-direction: column;
       margin-left: 30px;
+      row-gap: 10px;
     }
   }
 }

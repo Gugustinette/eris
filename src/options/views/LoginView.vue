@@ -40,10 +40,14 @@ export default defineComponent({
   },
   methods: {
     login(fieldValues) {
-      this.online.login(
-        fieldValues[this.t("BASIC.USERNAME")],
-        fieldValues[this.t("BASIC.PASSWORD")]
-      );
+      this.online
+        .login(
+          fieldValues[this.t("BASIC.USERNAME")],
+          fieldValues[this.t("BASIC.PASSWORD")]
+        )
+        .catch(() => {
+          alert(this.t("AUTH.INVALID_CREDENTIALS"));
+        });
     },
   },
 });

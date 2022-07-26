@@ -26,6 +26,8 @@
 import { useStore } from "../../store";
 import { useOnline } from "../../store/online";
 
+import { useI18n } from "vue-i18n";
+
 // Components
 import Editor from "@/components/editor/Editor.vue";
 import EditorActionBar from "@/components/editor/ActionBar.vue";
@@ -34,10 +36,12 @@ export default {
   setup() {
     const store = useStore();
     const online = useOnline();
+    const { t } = useI18n();
 
     return {
       store,
       online,
+      t,
     };
   },
   name: "StyleEditorView",
@@ -64,20 +68,24 @@ export default {
     },
     publishCss() {
       // Publish the style
-      this.online.addStyle(this.editingStyle).then((remoteStyle) => {
-        // No local changes to publish
-        this.editingStyle.updatedLocal = undefined;
-        // Dates for versioning
-        this.editingStyle.updatedAt = remoteStyle.updatedAt;
-        this.editingStyle.createdAt = remoteStyle.createdAt;
-        // New id
-        this.editingStyle._id = remoteStyle._id;
-        // Save as local style
-        this.store.editStyle(this.editingStyle);
-        // States
-        this.needsToBePublished = false;
-        this.allreadyPublished = true;
-      });
+      if (this.isConnected) {
+        this.online.addStyle(this.editingStyle).then((remoteStyle) => {
+          // No local changes to publish
+          this.editingStyle.updatedLocal = undefined;
+          // Dates for versioning
+          this.editingStyle.updatedAt = remoteStyle.updatedAt;
+          this.editingStyle.createdAt = remoteStyle.createdAt;
+          // New id
+          this.editingStyle._id = remoteStyle._id;
+          // Save as local style
+          this.store.editStyle(this.editingStyle);
+          // States
+          this.needsToBePublished = false;
+          this.allreadyPublished = true;
+        });
+      } else {
+        alert(this.t("AUTH.NOT_CONNECTED"));
+      }
     },
     updateCss() {
       // Edit the style

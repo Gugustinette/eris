@@ -6,6 +6,7 @@
       widthOnHover: widthOnHover,
       colorOnHover: colorOnHover,
       noBackground: noBackground,
+      red: red,
     }"
   />
 </template>
@@ -20,6 +21,7 @@ export default defineComponent({
     colorOnHover: Boolean,
     widthOnHover: Boolean,
     noBackground: Boolean,
+    red: Boolean,
   },
 });
 </script>
@@ -52,5 +54,9 @@ input {
 .noBackground {
   color: var(--color-secondary);
   background: transparent;
+}
+
+.red {
+  background: var(--color-red);
 }
 </style>

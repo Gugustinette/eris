@@ -9,6 +9,11 @@
         <div class="profil-name">{{ online.user.username }}</div>
       </div>
       <Button :content="t('AUTH.DISCONNECT')" @click="online.logout()" />
+      <Button
+        :content="t('AUTH.DELETE_ACCOUNT')"
+        :red="true"
+        @click="deleteAccount"
+      />
     </div>
     <div class="settings-section-content" v-else>
       <div class="profil-header">
@@ -53,6 +58,13 @@ export default {
     Button,
     LoginView,
     SignUpView,
+  },
+  methods: {
+    deleteAccount() {
+      if (confirm(this.t("AUTH.DELETE_ACCOUNT_CONFIRM"))) {
+        this.online.deleteAccount();
+      }
+    },
   },
 };
 </script>
