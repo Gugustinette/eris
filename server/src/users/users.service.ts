@@ -2,6 +2,9 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { IUser } from './interfaces/user.interface';
 import { IStyle } from 'src/style/interfaces/style.interface';
+import * as bcrypt from 'bcrypt';
+
+const saltRounds = 10;
 
 @Injectable()
 export class UsersService {
@@ -26,7 +29,12 @@ export class UsersService {
       throw new HttpException('User allready exists', HttpStatus.BAD_REQUEST);
     } else {
       // User doesn't exist, create it
-      const newUser = new this.userModel(user);
+      const salt = await bcrypt.genSalt(saltRounds);
+      const hash = await bcrypt.hash(user.password, salt);
+      const newUser = new this.userModel({
+        username: user.username,
+        password: hash,
+      });
       return newUser.save();
     }
   }
@@ -36,6 +44,8 @@ export class UsersService {
     return this.userModel.findOneAndDelete({ _id }).then((user) => {
       // Delete every style that belongs to the user
       this.styleModel.deleteMany({ user: user._id }).exec();
+      // Trucate password
+      user.password = undefined;
       // Return the user
       return user;
     });
