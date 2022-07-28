@@ -14,17 +14,18 @@
       <ErisLogo />
     </nav>
     <div class="content">
-      <h1>Your UI Hero is here</h1>
+      <h1>Votre sauveur d'interface</h1>
       <p>
-        Eris is a chrome extension that allows you to customize the look and
-        feel of websites. It works by injecting CSS into pages for certain
-        domains. The extension lets you create, manage and share custom themes.
+        Eris est une extension chrome qui vous permet de personnaliser l'aspect
+        visuel des sites web. Elle fonctionne en injectant du code CSS dans les
+        pages web, à des domaines précis. L'extension vous permet ainsi de
+        créer, manager et partager des refontes visuelles personnalisées.
       </p>
       <a href="https://google.com" class="active-button"
-        >Download for Google Chrome</a
+        >Télécharger pour Google Chrome</a
       >
     </div>
-    <a class="policy-button" href="/policy">Policy</a>
+    <a class="policy-button" href="/policy">Politique de confidentialité</a>
   </div>
 </template>
 
