@@ -31,7 +31,6 @@ export default {
     fetch("/policy/policy.md")
       .then((res) => res.text())
       .then((text) => {
-        console.log(text);
         this.src = text;
       });
   },
