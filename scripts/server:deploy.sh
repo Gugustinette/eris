@@ -2,4 +2,4 @@
 cd server
 
 npm run build
-pm2 --name Eris_Server start node ./dist/main.js
+pm2 --name Eris_Server start ./dist/main.js
