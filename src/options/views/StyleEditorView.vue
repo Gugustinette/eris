@@ -70,13 +70,13 @@ export default {
       // Publish the style
       if (this.isConnected) {
         this.online.addStyle(this.editingStyle).then((remoteStyle) => {
-          // No local changes to publish
-          this.editingStyle.updatedLocal = undefined;
-          // Dates for versioning
-          this.editingStyle.updatedAt = remoteStyle.updatedAt;
-          this.editingStyle.createdAt = remoteStyle.createdAt;
-          // New id
-          this.editingStyle._id = remoteStyle._id;
+          // Copy all keys from the remote style to the local style appart from _id
+          Object.keys(remoteStyle).forEach((key) => {
+            if (key !== "_id") {
+              this.editingStyle[key] = remoteStyle[key];
+            }
+          });
+          this.editingStyle._newId = remoteStyle._id;
           // Save as local style
           this.store.editStyle(this.editingStyle);
           // States
@@ -174,6 +174,9 @@ export default {
         if (this.editingStyle.updatedAt) {
           this.allreadyPublished = true;
         }
+
+        // Connected ?
+        this.isConnected = this.online.bearerToken !== undefined;
       });
     });
   },

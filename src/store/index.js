@@ -74,6 +74,9 @@ export const useStore = defineStore("main-store", {
           if (style.images) {
             s.images = style.images;
           }
+          if (style._newId) {
+            s._id = style._newId;
+          }
         }
       });
       this.saveToChromeStorage();

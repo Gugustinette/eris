@@ -181,6 +181,7 @@ export default {
   background: var(--color-primary);
   height: var(--action-bar-size);
   width: 100%;
+  max-width: calc(100vw - 240px - 65px);
   display: flex;
   flex-direction: row;
 
@@ -239,7 +240,7 @@ export default {
     column-gap: 20px;
     height: 100%;
     width: 100%;
-    margin-right: 20px;
+    margin-right: 30px;
   }
 
   .main-action {
