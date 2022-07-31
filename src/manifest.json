@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "homepage_url": "https://twitter.com/gugustinette",
+  "homepage_url": "https://eris.gugustinette.com/",
   "description": "Create and share new UI for websites",
   "default_locale": "en",
+  "version": "1.0",
   "permissions": [
     "activeTab",
     "tabs",
