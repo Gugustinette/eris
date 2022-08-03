@@ -21,7 +21,9 @@
         pages web, à des domaines précis. L'extension vous permet ainsi de
         créer, manager et partager des refontes visuelles personnalisées.
       </p>
-      <a href="https://google.com" class="active-button"
+      <a
+        href="https://chrome.google.com/webstore/detail/eris/jhakgjgcbkfcfiifmphdmbiinekbalej"
+        class="active-button"
         >Télécharger pour Google Chrome</a
       >
     </div>
